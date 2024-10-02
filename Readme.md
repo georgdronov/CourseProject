@@ -8,7 +8,7 @@ Quizzes, tests, questionnaires, polls, etc.
 [courseproject-5nrc.onrender.com](https://courseproject-5nrc.onrender.com)
 
 - **Vercel for React**
-*(To be added as development progresses)*
+[https://course-project-rust-seven.vercel.app/](https://https://course-project-rust-seven.vercel.app/)
 
 ### Backend
 The backend is built using **Node.js** and leverages the following libraries:
