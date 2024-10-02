@@ -3,6 +3,13 @@
 ## Description
 Quizzes, tests, questionnaires, polls, etc.
 
+### Deploy
+- **render.com for Node.js and DB** 
+[courseproject-5nrc.onrender.com](https://courseproject-5nrc.onrender.com)
+
+- **Vercel for React**
+*(To be added as development progresses)*
+
 ### Backend
 The backend is built using **Node.js** and leverages the following libraries:
 - **Express**: A fast, minimalist web framework for Node.js.
