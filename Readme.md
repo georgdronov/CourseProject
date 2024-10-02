@@ -19,4 +19,6 @@ The backend is built using **Node.js** and leverages the following libraries:
 The frontend is built using **React**.
 
 Libraries used:
-- *(To be added as development progresses)*
+- react-router-dom
+- bootstrap
+- [react-bootstrap](https://react-bootstrap.netlify.app/docs/getting-started/introduction)
