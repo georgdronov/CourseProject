@@ -3,9 +3,9 @@ import { Form } from "react-bootstrap";
 
 export const MultiLineQuestion = ({ title, description }) => {
   return (
-    <Form.Group>
-      <Form.Label>{title}</Form.Label>
-      <Form.Control as="textarea" rows={3} placeholder="{description}" />
+    <Form.Group className="mb-3">
+      <Form.Label className="fw-bold">{title}</Form.Label>
+      <Form.Control as="textarea" rows={3} placeholder={description} />
     </Form.Group>
   );
 };
