@@ -108,8 +108,9 @@ export const FormBuilder = (props) => {
             </Form>
           </div>
         </Col>
-        <Col className="col-12 col-md-6"> 
-          <div className="shadow bg-light p-5 rounded">
+        <Col className="col-12 col-md-6">  
+        <div className="shadow bg-light p-5 rounded preview-section sticky-top" style={{ maxHeight: '80vh', overflowY: 'auto' }}>
+
             <div className="preview-section mt-5">
               <h3 className="mb-4 h1 text-center">Preview</h3>
               <div className="mb-3 shadow bg-light p-5 rounded">
