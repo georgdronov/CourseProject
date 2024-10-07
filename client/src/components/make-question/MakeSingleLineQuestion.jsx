@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import { Form, Button } from "react-bootstrap";
-import { SingleLineQuestion } from "../questions/SingleLineQuestion.jsx";
+import React, { useState, useEffect, useCallback } from "react";
+import { Form } from "react-bootstrap";
 
 export const MakeSingleLineQuestion = ({
   id,
@@ -11,23 +10,33 @@ export const MakeSingleLineQuestion = ({
   const [localTitle, setLocalTitle] = useState(title || "");
   const [localDescription, setLocalDescription] = useState(description || "");
 
+  const handleUpdate = useCallback(() => {
+    if (localTitle !== title || localDescription !== description) {
+      onUpdate(id, { title: localTitle, description: localDescription });
+    }
+  }, [localTitle, localDescription, id, title, description, onUpdate]);
+
+  useEffect(() => {
+    handleUpdate();
+  }, [localTitle, localDescription, id, title, description, handleUpdate]);
+
   const handleTitleChange = (e) => {
     setLocalTitle(e.target.value);
-    onUpdate(id, { title: e.target.value, description: localDescription });
   };
 
   const handleDescriptionChange = (e) => {
-    setLocalTitle(e.target.value);
-    onUpdate(id, { title: localTitle, description: e.target.value });
+    setLocalDescription(e.target.value);
   };
 
+
   return (
-    <div className="mb-3">
+    <div className="mb-3 shadow bg-light p-5 rounded">
+      <h4 className="mb-3 text-center">Single Line Question</h4>
       <Form.Group controlId={`questionTitle_${id}`} className="mb-3">
         <Form.Label className="fw-bold">Title</Form.Label>
         <Form.Control
           type="text"
-          placeholder="Etner question title"
+          placeholder="Enter question title"
           value={localTitle}
           onChange={handleTitleChange}
         />
@@ -37,7 +46,7 @@ export const MakeSingleLineQuestion = ({
         <Form.Label className="fw-bold">Description</Form.Label>
         <Form.Control
           type="text"
-          placeholder="Etner question description"
+          placeholder="Enter question description"
           value={localDescription}
           onChange={handleDescriptionChange}
         />
