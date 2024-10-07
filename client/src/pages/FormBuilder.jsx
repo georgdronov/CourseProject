@@ -45,6 +45,9 @@ export const FormBuilder = (props) => {
             <h1 className="text-center mb-2">Welcome to Form builder!</h1>
             <h3>Create your own unique form</h3>
             <Form className="mt-4">
+
+
+
               {questions.map((question) => {
                 const QuestionComponent = {
                   SingleLineQuestion: MakeSingleLineQuestion,
