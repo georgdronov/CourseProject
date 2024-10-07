@@ -1,48 +1,49 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { Form } from "react-bootstrap";
 
-export const MakeTitleQuestion = ({ title, description, onUpdate }) => {
-  const [title, setTitle] = useState("Etner title");
-  const [description, setDescription] = useState("Enter description");
+export const MakeTitleQuestion = ({
+  title: formTitle,
+  description: formDescription,
+  onUpdate,
+}) => {
+  const [localTitle, setLocalTitle] = useState(formTitle || "");
+  const [localDescription, setLocalDescription] = useState(
+    formDescription || ""
+  );
+
+  const handleUpdate = useCallback(() => {
+    if (localTitle !== formTitle || localDescription !== formDescription) {
+      onUpdate({ title: localTitle, description: localDescription });
+    }
+  }, [localTitle, localDescription, formTitle, formDescription, onUpdate]);
 
   useEffect(() => {
-    onUpdate({
-      titleQuestion: title,
-      descriptionuestion: description,
-    });
-  }, [title, description, onUpdate]);
+    handleUpdate();
+  }, [localTitle, localDescription, handleUpdate]);
 
-  const handleTitleChange = (e) => {
-    setTitle(e.target.value);
-  };
-
-  const handleDescriptionChange = (e) => {
-    setDescription(e.target.value);
-  };
-
-
-  return(
-  <div>
-    <h3 className="mb-3 text-center">Enter form title</h3>
-    <Form.Groupe controlId="formTitle">
+  return (
+    <div className="mb-3">
+      <Form.Group controlId="formTitle">
+        <h3 className="mb-3">Create form title</h3>
         <Form.Control
           type="text"
-          placeholder="Enter title"
-          value={title}
-          onChange={handleTitleChange}
+          placeholder="Enter form title"
+          value={localTitle}
+          onChange={(e) => setLocalTitle(e.target.value)}
         />
-    </Form.Groupe>
-    <h3 className="mb-3 text-center">Enter form description</h3>
-    <Form.Groupe controlId="formTitle">
+      </Form.Group>
+
+      <Form.Group controlId="formDescription" className="mt-3">
+        <h3 className="mb-3">Create form description</h3>
         <Form.Control
-          as="textarea" 
+          as="textarea"
+          placeholder="Enter form description"
           rows={3}
-          placeholder="Enter description"
-          value={title}
-          onChange={handleDescriptionChange}
+          value={localDescription}
+          onChange={(e) => setLocalDescription(e.target.value)}
           style={{ resize: "none" }}
         />
-    </Form.Groupe>
-  </div>    
-
-  ) 
+      </Form.Group>
+    </div>
+  );
 };
