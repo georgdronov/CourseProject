@@ -2,17 +2,25 @@ import React, { useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 
 // questions
-import { CheckboxQuestion } from "../components/questions/CheckboxQuestion.jsx";
-import { MultiLineQuestion } from "../components/questions/MultiLineQuestion.jsx";
-import { NumberQuestion } from "../components/questions/NumberQuestion.jsx";
-import { SingleLineQuestion } from "../components/questions/SingleLineQuestion.jsx";
+import { CheckboxQuestion } from "../components/questions/CheckboxQuestion";
+import { MultiLineQuestion } from "../components/questions/MultiLineQuestion";
+import { NumberQuestion } from "../components/questions/NumberQuestion";
+import { SingleLineQuestion } from "../components/questions/SingleLineQuestion";
 
 // make question
-import { MakeSingleLineQuestion } from "../components/make-question/MakeSingleLineQuestion.jsx";
+import { MakeTitleQuestion } from "../components/make-titles/MakeTitleQuestion";
+import { MakeSingleLineQuestion } from "../components/make-question/MakeSingleLineQuestion";
 
 export const FormBuilder = (props) => {
+  const [formTitle, setFormTitle] = useState("");
+  const [formDescription, setFormDescription] = useState("");
   const [selectedQuestionType, setSelectedQuestionType] = useState("");
   const [questions, setQuestions] = useState([]);
+
+  const handleUpdateForm = ({ title, description }) => {
+    setFormTitle(title);
+    setFormDescription(description);
+  };
 
   const handleSelectChange = (event) => {
     setSelectedQuestionType(event.target.value);
@@ -39,14 +47,16 @@ export const FormBuilder = (props) => {
 
   return (
     <Container className="d-flex justify-content-center align-items-center min-vh-100">
-      <Row>
-        <Col>
+      <Row className="w-100">
+        <Col className="col-12 col-md-6">
           <div className="shadow bg-light p-5 rounded">
-            <h1 className="text-center mb-2">Welcome to Form builder!</h1>
-            <h3>Create your own unique form</h3>
+            <h1 className="text-center mb-2">Form builder</h1>
             <Form className="mt-4">
-
-
+              <MakeTitleQuestion
+                title={formTitle}
+                description={formDescription}
+                onUpdate={handleUpdateForm}
+              />
 
               {questions.map((question) => {
                 const QuestionComponent = {
@@ -68,6 +78,7 @@ export const FormBuilder = (props) => {
                 ) : null;
               })}
 
+              <h3 className="mb-3">Create question</h3>
               <Form.Group controlId="questionTypeSelect">
                 <Form.Label className="fw-bold">
                   Choose a question type
@@ -95,9 +106,15 @@ export const FormBuilder = (props) => {
                 Create Question
               </Button>
             </Form>
+          </div>
+        </Col>
+        <Col className="col-12 col-md-6"> 
+          <div className="shadow bg-light p-5 rounded">
             <div className="preview-section mt-5">
-              <h3 className="mb-4">Preview</h3>
+              <h3 className="mb-4 h1 text-center">Preview</h3>
               <div className="mb-3 shadow bg-light p-5 rounded">
+                <h2 className="text-center">{formTitle || "Form Title"}</h2>
+                <p>{formDescription || "Form description goes here..."}</p>
                 {questions.map((question) =>
                   question.type === "SingleLineQuestion" ? (
                     <SingleLineQuestion
