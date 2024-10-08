@@ -11,6 +11,7 @@ import { SingleLineQuestion } from "../components/questions/SingleLineQuestion";
 import { MakeTitleQuestion } from "../components/make-titles/MakeTitleQuestion";
 import { MakeSingleLineQuestion } from "../components/make-question/MakeSingleLineQuestion";
 import { MakeMultiLineQuestion } from "../components/make-question/MakeMultiLineQuestion";
+import { MakeNumberQuestion } from "../components/make-question/MakeNumberQuestion";
 
 export const FormBuilder = (props) => {
   const [formTitle, setFormTitle] = useState("");
@@ -35,7 +36,7 @@ export const FormBuilder = (props) => {
       description: "",
       options: [], // maybe later add options
     };
-
+    console.log("Created question type:", selectedQuestionType);
     setQuestions([...questions, newQuestion]);
     setSelectedQuestionType("");
   };
@@ -60,10 +61,11 @@ export const FormBuilder = (props) => {
               />
 
               {questions.map((question) => {
+                console.log("Rendering question type:", question.type);
                 const QuestionComponent = {
                   SingleLineQuestion: MakeSingleLineQuestion,
                   MultiLineQuestion: MakeMultiLineQuestion,
-                  // NumberQuestion: MakeNumberQuestion,
+                  NumberQuestion: MakeNumberQuestion,
                   // CheckboxQuestion: MakeCheckboxQuestion,
                 }[question.type];
 
@@ -124,7 +126,7 @@ export const FormBuilder = (props) => {
                   const QuestionComponent = {
                     SingleLineQuestion: SingleLineQuestion,
                     MultiLineQuestion: MultiLineQuestion,
-                    // NumberQuestion: NumberQuestion,
+                    NumberQuestion: NumberQuestion,
                     // CheckboxQuestion: CheckboxQuestion,
                   }[question.type];
 
