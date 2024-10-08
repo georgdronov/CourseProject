@@ -10,6 +10,7 @@ import { SingleLineQuestion } from "../components/questions/SingleLineQuestion";
 // make question
 import { MakeTitleQuestion } from "../components/make-titles/MakeTitleQuestion";
 import { MakeSingleLineQuestion } from "../components/make-question/MakeSingleLineQuestion";
+import { MakeMultiLineQuestion } from "../components/make-question/MakeMultiLineQuestion";
 
 export const FormBuilder = (props) => {
   const [formTitle, setFormTitle] = useState("");
@@ -61,7 +62,7 @@ export const FormBuilder = (props) => {
               {questions.map((question) => {
                 const QuestionComponent = {
                   SingleLineQuestion: MakeSingleLineQuestion,
-                  // MultiLineQuestion: MakeMultiLineQuestion,
+                  MultiLineQuestion: MakeMultiLineQuestion,
                   // NumberQuestion: MakeNumberQuestion,
                   // CheckboxQuestion: MakeCheckboxQuestion,
                 }[question.type];
@@ -108,23 +109,34 @@ export const FormBuilder = (props) => {
             </Form>
           </div>
         </Col>
-        <Col className="col-12 col-md-6">  
-          <div className="shadow bg-light p-5 rounded preview-section sticky-top" style={{ maxHeight: '80vh', overflowY: 'auto' }}>
-
+        <Col className="col-12 col-md-6">
+          <div
+            className="shadow bg-light p-5 rounded preview-section sticky-top"
+            style={{ maxHeight: "80vh", overflowY: "auto" }}
+          >
             <div className="preview-section mt-5">
               <h3 className="mb-4 h1 text-center">Preview</h3>
               <div className="mb-3 shadow bg-light p-5 rounded">
                 <h2 className="text-center">{formTitle || "Form Title"}</h2>
                 <p>{formDescription || "Form description goes here..."}</p>
-                {questions.map((question) =>
-                  question.type === "SingleLineQuestion" ? (
-                    <SingleLineQuestion
+
+                {questions.map((question) => {
+                  const QuestionComponent = {
+                    SingleLineQuestion: SingleLineQuestion,
+                    MultiLineQuestion: MultiLineQuestion,
+                    // NumberQuestion: NumberQuestion,
+                    // CheckboxQuestion: CheckboxQuestion,
+                  }[question.type];
+
+                  return QuestionComponent ? (
+                    <QuestionComponent
                       key={question.id}
                       title={question.title}
                       description={question.description}
+                      // options={question.options}
                     />
-                  ) : null
-                )}
+                  ) : null;
+                })}
               </div>
             </div>
           </div>
