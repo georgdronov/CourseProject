@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
-import { DndProvider, useDrag, useDrop } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
 // questions
 import { CheckboxQuestion } from "../components/questions/CheckboxQuestion";
@@ -15,47 +14,6 @@ import { MakeSingleLineQuestion } from "../components/make-question/MakeSingleLi
 import { MakeMultiLineQuestion } from "../components/make-question/MakeMultiLineQuestion";
 import { MakeNumberQuestion } from "../components/make-question/MakeNumberQuestion";
 import { MakeCheckboxQuestion } from "../components/make-question/MakeCheckboxQuestion";
-
-const ItemTypes = {
-  QUESTION: "question",
-};
-
-const DraggableQuestion = ({ question, index, moveQuestion, children }) => {
-  const [{ isDragging }, ref] = useDrag({
-    type: ItemTypes.QUESTION,
-    item: { index },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-    }),
-  });
-
-  const [, drop] = useDrop({
-    accept: ItemTypes.QUESTION,
-    hover(item, monitor) {
-      const dragIndex = item.index;
-      const hoverIndex = index;
-
-      if (dragIndex !== hoverIndex) {
-        requestAnimationFrame(() => {
-          moveQuestion(dragIndex, hoverIndex);
-          item.index = hoverIndex; 
-        });
-      }
-    },
-  });
-
-  return (
-    <div
-      ref={(node) => ref(drop(node))}
-      className={`draggable-question mb-2 ${isDragging ? "dragging" : ""}`}
-      style={{ transform: isDragging ? "scale(1.02)" : "scale(1)" }}
-    >
-      {children}
-    </div>
-  );
-};
-
-
 
 export const FormBuilder = (props) => {
   const [formTitle, setFormTitle] = useState("");
@@ -94,15 +52,18 @@ export const FormBuilder = (props) => {
     setQuestions(questions.filter((q) => q.id !== id));
   };
 
-  const moveQuestion = (fromIndex, toIndex) => {
+  const onDragEnd = (result) => {
+    const { source, destination } = result;
+    if (!destination) return;
+
     const updatedQuestions = Array.from(questions);
-    const [movedQuestion] = updatedQuestions.splice(fromIndex, 1);
-    updatedQuestions.splice(toIndex, 0, movedQuestion);
+    const [movedQuestion] = updatedQuestions.splice(source.index, 1);
+    updatedQuestions.splice(destination.index, 0, movedQuestion);
     setQuestions(updatedQuestions);
   };
 
   return (
-    <DndProvider backend={HTML5Backend}>
+    <DragDropContext onDragEnd={onDragEnd}>
       <Container className="d-flex justify-content-center align-items-center min-vh-100">
         <Row className="w-100">
           <Col className="col-12 col-md-6">
@@ -116,33 +77,56 @@ export const FormBuilder = (props) => {
                   className="mb-4"
                 />
 
-                <div>
-                  {questions.map((question, index) => {
-                    const QuestionComponent = {
-                      SingleLineQuestion: MakeSingleLineQuestion,
-                      MultiLineQuestion: MakeMultiLineQuestion,
-                      NumberQuestion: MakeNumberQuestion,
-                      CheckboxQuestion: MakeCheckboxQuestion,
-                    }[question.type];
+                <Droppable droppableId="questions">
+                  {(provided) => (
+                    <div {...provided.droppableProps} ref={provided.innerRef}>
+                      {questions.map((question, index) => {
+                        const QuestionComponent = {
+                          SingleLineQuestion: MakeSingleLineQuestion,
+                          MultiLineQuestion: MakeMultiLineQuestion,
+                          NumberQuestion: MakeNumberQuestion,
+                          CheckboxQuestion: MakeCheckboxQuestion,
+                        }[question.type];
 
-                    return QuestionComponent ? (
-                      <DraggableQuestion
-                        key={question.id}
-                        index={index}
-                        moveQuestion={moveQuestion}
-                      >
-                        <QuestionComponent
-                          id={question.id}
-                          title={question.title}
-                          description={question.description}
-                          options={question.options}
-                          onUpdate={handleUpdateQuestion}
-                          onDelete={handleDeleteQuestion}
-                        />
-                      </DraggableQuestion>
-                    ) : null;
-                  })}
-                </div>
+                        return QuestionComponent ? (
+                          <Draggable
+                            key={question.id}
+                            draggableId={question.id.toString()}
+                            index={index}
+                          >
+                            {(provided, snapshot) => (
+                              <div
+                                ref={provided.innerRef}
+                                {...provided.draggableProps}
+                                {...provided.dragHandleProps}
+                                className={`draggable-question mb-2 ${
+                                  snapshot.isDragging ? "dragging" : ""
+                                }`}
+                                style={{
+                                  transition: "transform 0.2s ease",
+                                  transform: snapshot.isDragging
+                                    ? "scale(1.05)"
+                                    : "scale(1)",
+                                  ...provided.draggableProps.style,
+                                }}
+                              >
+                                <QuestionComponent
+                                  id={question.id}
+                                  title={question.title}
+                                  description={question.description}
+                                  options={question.options}
+                                  onUpdate={handleUpdateQuestion}
+                                  onDelete={handleDeleteQuestion}
+                                />
+                              </div>
+                            )}
+                          </Draggable>
+                        ) : null;
+                      })}
+                      {provided.placeholder}
+                    </div>
+                  )}
+                </Droppable>
 
                 <h3 className="mb-3">Create question</h3>
                 <Form.Group controlId="questionTypeSelect">
@@ -159,7 +143,9 @@ export const FormBuilder = (props) => {
                     <option value="SingleLineQuestion">
                       Single Line Question
                     </option>
-                    <option value="MultiLineQuestion">Multi Line Question</option>
+                    <option value="MultiLineQuestion">
+                      Multi Line Question
+                    </option>
                     <option value="NumberQuestion">Number Question</option>
                     <option value="CheckboxQuestion">Checkbox Question</option>
                   </Form.Select>
@@ -208,6 +194,6 @@ export const FormBuilder = (props) => {
           </Col>
         </Row>
       </Container>
-    </DndProvider>
+    </DragDropContext>
   );
 };
