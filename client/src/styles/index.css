@@ -22,7 +22,6 @@ html {
 }
 
 .draggable-question {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
   cursor: grab;
 }
 
@@ -32,7 +31,6 @@ html {
 
 .draggable-question:hover {
   cursor: grabbing;
-  /* opacity: 0.8; */
 }
 
 .dragging {
