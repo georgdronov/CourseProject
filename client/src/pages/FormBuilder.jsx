@@ -1,5 +1,3 @@
-//Toggle JS & TS InlayHints - activate this extention
-
 import React, { useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 
@@ -37,9 +35,8 @@ export const FormBuilder = (props) => {
       type: selectedQuestionType,
       title: "",
       description: "",
-      options: [], // maybe later add options
+      options: [],
     };
-    console.log("Created question type:", selectedQuestionType);
     setQuestions([...questions, newQuestion]);
     setSelectedQuestionType("");
   };
@@ -48,6 +45,10 @@ export const FormBuilder = (props) => {
     setQuestions(
       questions.map((q) => (q.id === id ? { ...q, ...updateData } : q))
     );
+  };
+
+  const handleDeleteQuestion = (id) => {
+    setQuestions(questions.filter((q) => q.id !== id));
   };
 
   return (
@@ -65,7 +66,6 @@ export const FormBuilder = (props) => {
               />
 
               {questions.map((question) => {
-                console.log("Rendering question type:", question.type);
                 const QuestionComponent = {
                   SingleLineQuestion: MakeSingleLineQuestion,
                   MultiLineQuestion: MakeMultiLineQuestion,
@@ -81,6 +81,7 @@ export const FormBuilder = (props) => {
                     description={question.description}
                     options={question.options}
                     onUpdate={handleUpdateQuestion}
+                    onDelete={handleDeleteQuestion} 
                   />
                 ) : null;
               })}
