@@ -14,6 +14,7 @@ import { MakeTitleQuestion } from "../components/make-titles/MakeTitleQuestion";
 import { MakeSingleLineQuestion } from "../components/make-question/MakeSingleLineQuestion";
 import { MakeMultiLineQuestion } from "../components/make-question/MakeMultiLineQuestion";
 import { MakeNumberQuestion } from "../components/make-question/MakeNumberQuestion";
+import { MakeCheckboxQuestion } from "../components/make-question/MakeCheckboxQuestion";
 
 export const FormBuilder = (props) => {
   const [formTitle, setFormTitle] = useState("");
@@ -69,7 +70,7 @@ export const FormBuilder = (props) => {
                   SingleLineQuestion: MakeSingleLineQuestion,
                   MultiLineQuestion: MakeMultiLineQuestion,
                   NumberQuestion: MakeNumberQuestion,
-                  // CheckboxQuestion: MakeCheckboxQuestion,
+                  CheckboxQuestion: MakeCheckboxQuestion,
                 }[question.type];
 
                 return QuestionComponent ? (
@@ -130,7 +131,7 @@ export const FormBuilder = (props) => {
                     SingleLineQuestion: SingleLineQuestion,
                     MultiLineQuestion: MultiLineQuestion,
                     NumberQuestion: NumberQuestion,
-                    // CheckboxQuestion: CheckboxQuestion,
+                    CheckboxQuestion: CheckboxQuestion,
                   }[question.type];
 
                   return QuestionComponent ? (
@@ -138,7 +139,7 @@ export const FormBuilder = (props) => {
                       key={question.id}
                       title={question.title}
                       description={question.description}
-                      // options={question.options}
+                      options={question.options}
                     />
                   ) : null;
                 })}

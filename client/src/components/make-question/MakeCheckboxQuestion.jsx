@@ -1,16 +1,18 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
 
-export const ComponentName = ({
+export const MakeCheckboxQuestion = ({
   id,
   title,
   description,
   options = [],
   onUpdate,
 }) => {
-  const [localTitle, setLocaltitle] = useState(title || "");
+  const [localTitle, setLocalTitle] = useState(title || "");
   const [localDescription, setLocalDescription] = useState(description || "");
-  const [localOptions, setLocalOptions] = useState(options || [""]);
+  const [localOptions, setLocalOptions] = useState(
+    options.length ? options : [""]
+  );
 
   const handleUpdate = useCallback(() => {
     if (
@@ -31,8 +33,8 @@ export const ComponentName = ({
     id,
     title,
     description,
-    onUpdate,
     options,
+    onUpdate,
   ]);
 
   useEffect(() => {
@@ -40,7 +42,7 @@ export const ComponentName = ({
   }, [localTitle, localDescription, localOptions, handleUpdate]);
 
   const handleTitleChange = (e) => {
-    setLocaltitle(e.target.value);
+    setLocalTitle(e.target.value);
   };
 
   const handleDescriptionChange = (e) => {
@@ -58,14 +60,14 @@ export const ComponentName = ({
   };
 
   const handleRemoveOption = (index) => {
-    const updateOptions = localOptions.filter((_, i) => i !== index);
+    const updatedOptions = localOptions.filter((_, i) => i !== index);
     setLocalOptions(updatedOptions);
   };
 
   return (
     <div className="mb-3 shadow bg-light p-5 rounded">
       <h4 className="mb-3 text-center">Checkbox Question</h4>
-      <Form.Group controlId={`questionTitle+${id}`} className="mb-3">
+      <Form.Group controlId={`questionTitle_${id}`} className="mb-3">
         <Form.Label className="fw-bold">Title</Form.Label>
         <Form.Control
           type="text"
@@ -80,16 +82,31 @@ export const ComponentName = ({
         <Form.Control
           type="text"
           placeholder="Enter question description"
-          value="localDescription"
+          value={localDescription}
           onChange={handleDescriptionChange}
         />
       </Form.Group>
 
-      <h5 className="mb-3">
-        Options
-      </h5>
-
-
+      <h5 className="mb-3">Options</h5>
+      {localOptions.map((option, index) => (
+        <div key={index} className="d-flex mb-2">
+          <Form.Control
+            type="text"
+            placeholder={`Option ${index + 1}`}
+            value={option}
+            onChange={(e) => handleOptionChange(index, e.target.value)}
+            className="me-2"
+          />
+          {localOptions.length > 1 && (
+            <Button variant="danger" onClick={() => handleRemoveOption(index)}>
+              Remove
+            </Button>
+          )}
+        </div>
+      ))}
+      <Button variant="secondary" onClick={handleAddOption} className="mt-2">
+        Add Option
+      </Button>
     </div>
   );
 };
