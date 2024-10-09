@@ -21,3 +21,20 @@ html {
   scrollbar-color: #007bff #e9ecef;
 }
 
+.draggable-question {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: grab;
+}
+
+.draggable-question.dragging {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.draggable-question:hover {
+  cursor: grabbing;
+  /* opacity: 0.8; */
+}
+
+.dragging {
+  opacity: 0.5;
+}
