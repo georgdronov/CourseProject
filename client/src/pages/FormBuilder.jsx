@@ -1,3 +1,5 @@
+//Toggle JS & TS InlayHints - activate this extention
+
 import React, { useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 
@@ -58,6 +60,7 @@ export const FormBuilder = (props) => {
                 title={formTitle}
                 description={formDescription}
                 onUpdate={handleUpdateForm}
+                className="mb-4"
               />
 
               {questions.map((question) => {
