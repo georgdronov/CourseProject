@@ -23,3 +23,4 @@ Libraries used:
 - react-router-dom
 - bootstrap
 - [react-bootstrap](https://react-bootstrap.netlify.app/docs/getting-started/introduction)
+- [react-dnd](https://react-dnd.github.io/react-dnd/about)
