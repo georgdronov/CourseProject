@@ -7,6 +7,7 @@ export const MakeCheckboxQuestion = ({
   description,
   options = [],
   onUpdate,
+  onDelete
 }) => {
   const [localTitle, setLocalTitle] = useState(title || "");
   const [localDescription, setLocalDescription] = useState(description || "");
@@ -65,8 +66,16 @@ export const MakeCheckboxQuestion = ({
   };
 
   return (
-    <div className="mb-3 shadow bg-light p-5 rounded">
+    <div className="mb-3 shadow bg-light p-5 rounded position-relative">
       <h4 className="mb-3 text-center">Checkbox Question</h4>
+      <Button
+        variant="link" 
+        className="position-absolute  end-0 m-2 p-0" 
+        onClick={() => onDelete(id)}
+        style={{ fontSize: "1.5rem", color: "black", textDecoration: "none", top:"-10px" }}
+      >
+        &times;
+      </Button>
       <Form.Group controlId={`questionTitle_${id}`} className="mb-3">
         <Form.Label className="fw-bold">Title</Form.Label>
         <Form.Control
@@ -87,7 +96,7 @@ export const MakeCheckboxQuestion = ({
         />
       </Form.Group>
 
-      <h5 className="mb-3">Options</h5>
+      <Form.Label className="fw-bold">Options</Form.Label>
       {localOptions.map((option, index) => (
         <div key={index} className="d-flex mb-2">
           <Form.Control
