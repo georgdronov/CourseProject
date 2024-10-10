@@ -1,27 +1,26 @@
-const express = require("express");
+import express from "express";
+import pkg from "pg";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const { Pool } = pkg;
 const app = express();
-require("dotenv").config();
-const port = process.env.PORT;
-const { Pool } = require("pg");
+const port = process.env.PORT || 5000;
 
 const pool = new Pool({
   connectionString: process.env.POSTGRES_URL,
 });
 
-app.get("/templates", async (req, res) => {
-  try {
-    const result = await pool.query("SELECT * FROM templates");
-    res.json(result.rows);
-  } catch (error) {
-    console.error("Error: ", error.message);
-    res.status(500).json({ error: error.message });
-  }
-});
+pool
+  .connect()
+  .then(() => console.log("Connected to DB"))
+  .catch((err) => console.log("Error connecting to DB", err));
 
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.send("Hello from server.js");
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+  console.log(`Listening at Port: ${port}`);
 });
