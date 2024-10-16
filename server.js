@@ -8,6 +8,8 @@ const { Pool } = pkg;
 const app = express();
 const port = process.env.PORT || 5000;
 
+app.use(express.json());
+
 const pool = new Pool({
   connectionString: process.env.POSTGRES_URL,
 });
@@ -24,3 +26,4 @@ app.get("/", (req, res) => {
 app.listen(port, () => {
   console.log(`Listening at Port: ${port}`);
 });
+
