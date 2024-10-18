@@ -44,8 +44,35 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-
 // === question routes ===
+// create new question
+router.post("/questions", async (req, res) => {
+  const { form_id, title, description, type, options, position, user_id } =
+    req.body;
+  try {
+    const result = await pool.query(
+      "INSERT INTO questions (form_id, title, description, type, options, position, user_id) VALUES ($1, $2,  $3, $4, $5, $6, $7) RETURNING *",
+      [form_id, title, description, type, options, position, user_id]
+    );
+    res.status(201).send(result.rows[0]);
+  } catch (err) {
+    res.status(500).send("Error creating question", err);
+  }
+});
 
+// get all questions for needed form
+router.get("/questions/:form_id", async (req, res) => {
+  const { form_id } = req.params;
+  try {
+    const result = await pool.query(
+      "SELECT * FROM questions WHERE form_id = $1",
+      [form_id]
+    );
+    res.status(200).send(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error retrieving questions");
+  }
+});
 
 export default router;
