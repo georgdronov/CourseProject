@@ -16,7 +16,7 @@ The backend is built using **Node.js** and leverages the following libraries:
 - **dotenv**: Loads environment variables from a `.env` file into `process.env`.
 - **pg**: For connect to DB
 - **axios**  : For HTTP requests
-
+- **сors** :  For CORS headers
 
 ### Frontend
 The frontend is built using **React**.
