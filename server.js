@@ -1,7 +1,7 @@
 import express from "express";
 import pkg from "pg";
 import dotenv from "dotenv";
-import formsRouter from "./routes/forms.js"; 
+import formsRouter from "./routes/forms.js";
 
 dotenv.config();
 
