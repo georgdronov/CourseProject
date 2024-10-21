@@ -33,7 +33,7 @@ export const FormBuilder = (props) => {
       const formData = {
         title: formTitle,
         description: formDescription,
-        user_id: 1, // todo: get user id
+        user_id: 1,
       };
 
       const formResponse = await axios.post(
@@ -41,7 +41,7 @@ export const FormBuilder = (props) => {
         formData
       );
 
-      if (formResponse === 201) {
+      if (formResponse.status === 201) {
         const formId = formResponse.data.id;
         const questionsData = questions.map((question, index) => ({
           id: uuidv4(),
@@ -63,12 +63,17 @@ export const FormBuilder = (props) => {
           alert("Form and questions saved successfully!");
         } else {
           alert("Failed to save questions.");
+          console.error("Questions Response:", questionsResponse);
         }
       } else {
         alert("Failed to save the form.");
+        console.error("Form Response:", formResponse);
       }
     } catch (error) {
-      console.error("Error saving form:", error);
+      console.error(
+        "Error saving form:",
+        error.response ? error.response.data : error.message
+      );
       alert("An error occurred while saving the form.");
     }
   };
