@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+import axios from "axios";
 
 // questions
 import { CheckboxQuestion } from "../components/questions/CheckboxQuestion";
@@ -24,6 +25,25 @@ export const FormBuilder = (props) => {
   const handleUpdateForm = ({ title, description }) => {
     setFormTitle(title);
     setFormDescription(description);
+  };
+
+  const handleSaveForm = async () => {
+    try {
+      const formData = {
+        title: formTitle,
+        description: formDescription,
+        questions,
+      };
+      const response = await axios.post(`${process.env.SERVER-URL}/forms`, formData); 
+      if (response.status === 200) {
+        alert("Form saved successfully!");
+      } else {
+        alert("Failed to save the form.");
+      }
+    } catch (error) {
+      console.error("Error saving form:", error);
+      alert("An error occurred while saving the form.");
+    }
   };
 
   const handleSelectChange = (event) => {
@@ -158,6 +178,15 @@ export const FormBuilder = (props) => {
                   Create Question
                 </Button>
               </Form>
+              <div className="d-flex justify-content-center">
+                <Button
+                  variant="success"
+                  className="mt-3 fs-5"
+                  onClick={handleSaveForm}
+                >
+                  Save form
+                </Button>
+              </div>
             </div>
           </Col>
           <Col className="col-12 col-md-6">
