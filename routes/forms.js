@@ -60,27 +60,35 @@ router.delete("/:id", async (req, res) => {
 
 // === Question routes ===
 
-// Create new question
+// Creating questions for a form
 router.post("/questions", async (req, res) => {
-  const { form_id, title, description, type, options, position, user_id } =
-    req.body;
+  const questions = req.body;
   try {
-    if (!form_id || !title || !type || !user_id) {
-      return res.status(400).send("Missing required fields");
+    if (!Array.isArray(questions) || questions.length === 0) {
+      return res.status(400).send("Missing questions");
     }
 
-    const formExists = await pool.query("SELECT id FROM forms WHERE id = $1", [
-      form_id,
-    ]);
-    if (formExists.rowCount === 0) {
-      return res.status(404).send("Form not found");
+    const query = `
+    INSERT INTO questions (form_id, title, description, type, options, position, user_id)
+    VALUES ($1, $2, $3, $4, $5, $6, $7)
+    RETURNING *
+    `;
+
+    const results = [];
+    for (const question of questions) {
+      const result = await pool.query(query, [
+        question.form_id,
+        question.title,
+        question.description,
+        question.type,
+        question.options,
+        question.position,
+        question.user_id,
+      ]);
+      results.push(result.rows[0]);
     }
 
-    const result = await pool.query(
-      "INSERT INTO questions (form_id, title, description, type, options, position, user_id) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *",
-      [form_id, title, description, type, options, position, user_id]
-    );
-    res.status(201).send(result.rows[0]);
+    res.status(201).send(results);
   } catch (err) {
     console.error("Error creating question:", err);
     res.status(500).send("Error creating question");

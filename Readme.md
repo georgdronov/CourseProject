@@ -19,10 +19,9 @@ The backend is built using **Node.js** and leverages the following libraries:
 - **сors** :  For CORS headers
 
 ### Frontend
-The frontend is built using **React**.
-
-Libraries used:
-- react-router-dom
-- bootstrap
-- [react-bootstrap](https://react-bootstrap.netlify.app/docs/getting-started/introduction)
-- [@hello-pangea/dnd](https://github.com/hello-pangea/dnd)
+The frontend is built using **React** and leverages the following libraries:
+- **react-router-dom**: For routing in React applications.
+- **bootstrap**: A popular CSS framework for responsive design.
+- **react-bootstrap**: Provides Bootstrap components as React components.
+- **@hello-pangea/dnd**: For drag-and-drop functionality.
+- **uid**: For generating unique IDs.
