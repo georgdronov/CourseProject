@@ -44,6 +44,7 @@ export const FormBuilder = (props) => {
       if (formResponse === 201) {
         const formId = formResponse.data.id;
         const questionsData = questions.map((question, index) => ({
+          id: uuidv4(),
           form_id: formId,
           title: question.title,
           description: question.description,
