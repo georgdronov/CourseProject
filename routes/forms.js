@@ -1,11 +1,7 @@
 import { Router } from "express";
-import pkg from "pg";
-const { Pool } = pkg;
+import db from "../db.js"; 
 
 const router = Router();
-const pool = new Pool({
-  connectionString: process.env.POSTGRES_URL,
-});
 
 // === Form routes ===
 
@@ -17,7 +13,7 @@ router.post("/", async (req, res) => {
       return res.status(400).send("Missing required fields");
     }
 
-    const result = await pool.query(
+    const result = await db.query(
       "INSERT INTO forms (title, description, user_id) VALUES ($1, $2, $3) RETURNING *",
       [title, description, user_id]
     );
@@ -31,7 +27,7 @@ router.post("/", async (req, res) => {
 // Get all forms
 router.get("/", async (req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM forms");
+    const result = await db.query("SELECT * FROM forms");
     res.status(200).send(result.rows);
   } catch (err) {
     console.error("Error retrieving forms:", err);
@@ -43,14 +39,14 @@ router.get("/", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const formExists = await pool.query("SELECT id FROM forms WHERE id = $1", [
+    const formExists = await db.query("SELECT id FROM forms WHERE id = $1", [
       id,
     ]);
     if (formExists.rowCount === 0) {
       return res.status(404).send("Form not found");
     }
 
-    await pool.query("DELETE FROM forms WHERE id = $1", [id]);
+    await db.query("DELETE FROM forms WHERE id = $1", [id]);
     res.status(204).send();
   } catch (err) {
     console.error("Error deleting form:", err);
@@ -76,7 +72,7 @@ router.post("/questions", async (req, res) => {
 
     const results = [];
     for (const question of questions) {
-      const result = await pool.query(query, [
+      const result = await db.query(query, [
         question.form_id,
         question.title,
         question.description,
@@ -99,7 +95,7 @@ router.post("/questions", async (req, res) => {
 router.get("/questions/:form_id", async (req, res) => {
   const { form_id } = req.params;
   try {
-    const result = await pool.query(
+    const result = await db.query(
       "SELECT * FROM questions WHERE form_id = $1",
       [form_id]
     );
@@ -117,7 +113,7 @@ router.get("/questions/:form_id", async (req, res) => {
 router.delete("/questions/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const questionExists = await pool.query(
+    const questionExists = await db.query(
       "SELECT id FROM questions WHERE id = $1",
       [id]
     );
@@ -125,7 +121,7 @@ router.delete("/questions/:id", async (req, res) => {
       return res.status(404).send("Question not found");
     }
 
-    await pool.query("DELETE FROM questions WHERE id = $1", [id]);
+    await db.query("DELETE FROM questions WHERE id = $1", [id]);
     res.status(204).send();
   } catch (err) {
     console.error("Error deleting question:", err);
@@ -143,10 +139,10 @@ router.post("/responses", async (req, res) => {
       return res.status(400).send("Missing required fields");
     }
 
-    const formExists = await pool.query("SELECT id FROM forms WHERE id = $1", [
+    const formExists = await db.query("SELECT id FROM forms WHERE id = $1", [
       form_id,
     ]);
-    const questionExists = await pool.query(
+    const questionExists = await db.query(
       "SELECT id FROM questions WHERE id = $1",
       [question_id]
     );
@@ -159,7 +155,7 @@ router.post("/responses", async (req, res) => {
       return res.status(404).send("Question not found");
     }
 
-    const result = await pool.query(
+    const result = await db.query(
       "INSERT INTO responses (form_id, question_id, answer, user_id) VALUES ($1, $2, $3, $4) RETURNING *",
       [form_id, question_id, answer, user_id]
     );
@@ -174,7 +170,7 @@ router.post("/responses", async (req, res) => {
 router.get("/responses/:form_id", async (req, res) => {
   const { form_id } = req.params;
   try {
-    const result = await pool.query(
+    const result = await db.query(
       "SELECT * FROM responses WHERE form_id = $1",
       [form_id]
     );
