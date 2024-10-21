@@ -2,6 +2,7 @@ import express from "express";
 import pkg from "pg";
 import dotenv from "dotenv";
 import formsRouter from "./routes/forms.js";
+import cors from "cors";
 
 dotenv.config();
 
@@ -9,6 +10,7 @@ const { Pool } = pkg;
 const app = express();
 const port = process.env.PORT || 5000;
 
+app.use(cors());
 app.use(express.json());
 
 const pool = new Pool({
