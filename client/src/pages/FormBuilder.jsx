@@ -55,7 +55,7 @@ export const FormBuilder = (props) => {
         }));
 
         const questionsResponse = await axios.post(
-          `${process.env.REACT_APP_SERVER_URL}/questions`,
+          `${process.env.REACT_APP_SERVER_URL}/questions/questions`,
           questionsData
         );
 
