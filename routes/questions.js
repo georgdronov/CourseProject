@@ -75,3 +75,5 @@ router.delete("/questions/:id", async (req, res) => {
     res.status(500).send("Error deleting question");
   }
 });
+
+export default router;
