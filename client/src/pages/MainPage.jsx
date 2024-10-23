@@ -1,8 +1,34 @@
-import React from "react";
-import { Container, Row, Col, Button, Card } from "react-bootstrap";
+import React, { useState } from "react";
+import { Container, Row, Col, Button, Card, Pagination } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 export const MainPage = (props) => {
+  const itemsPerPage = 6;
+
+  const formsForEditing = Array.from({ length: 15 });
+  const formsForFilling = Array.from({ length: 20 });
+
+  const totalFormsEdit = formsForEditing.length;
+  const totalFormsFill = formsForFilling.length;
+
+  const [currentPageEdit, setCurrentPageEdit] = useState(1);
+  const [currentPageFill, setCurrentPageFill] = useState(1);
+
+  const indexOfLastEditItem = currentPageEdit * itemsPerPage;
+  const indexOfFirstEditItem = indexOfLastEditItem - itemsPerPage;
+
+  const indexOfLastFillItem = currentPageFill * itemsPerPage;
+  const indexOfFirstFillItem = indexOfLastFillItem - itemsPerPage;
+
+  const currentEditForms = formsForEditing.slice(indexOfFirstEditItem, indexOfLastEditItem);
+  const currentFillForms = formsForFilling.slice(indexOfFirstFillItem, indexOfLastFillItem);
+
+  const totalPagesEdit = Math.ceil(totalFormsEdit / itemsPerPage);
+  const totalPagesFill = Math.ceil(totalFormsFill / itemsPerPage);
+
+  const handleEditPageChange = (pageNumber) => setCurrentPageEdit(pageNumber);
+  const handleFillPageChange = (pageNumber) => setCurrentPageFill(pageNumber);
+
   return (
     <Container className="d-flex flex-column justify-content-center align-items-center min-vh-100 shadow bg-light p-5 rounded">
       <h1 className="text-center mb-5">Welcome to the Form Builder!</h1>
@@ -19,15 +45,14 @@ export const MainPage = (props) => {
 
       <h2 className="mb-4 text-center">Form Editor</h2>
       <Row className="mb-5 w-100">
-        {Array.from({ length: 5 }).map((_, idx) => (
-          <Col md={6} lg={4} className="mb-4" key={idx}>
+        {currentEditForms.map((_, idx) => (
+          <Col md={6} lg={4} className="mb-4" key={indexOfFirstEditItem + idx}>
             <Card className="hover-shadow-lg">
-              <Card.Header>Form {idx + 1}</Card.Header>
+              <Card.Header>Form {indexOfFirstEditItem + idx + 1}</Card.Header>
               <Card.Body>
-                <Card.Title>Form Title {idx + 1}</Card.Title>
+                <Card.Title>Form Title {indexOfFirstEditItem + idx + 1}</Card.Title>
                 <Card.Text>
-                  This is a description of form {idx + 1}. You can edit this
-                  form.
+                  This is a description of form {indexOfFirstEditItem + idx + 1}. You can edit this form.
                 </Card.Text>
                 <Button variant="primary">Edit Form</Button>
               </Card.Body>
@@ -36,17 +61,30 @@ export const MainPage = (props) => {
         ))}
       </Row>
 
+      {totalPagesEdit > 1 && (
+        <Pagination>
+          {[...Array(totalPagesEdit).keys()].map((number) => (
+            <Pagination.Item
+              key={number + 1}
+              active={number + 1 === currentPageEdit}
+              onClick={() => handleEditPageChange(number + 1)}
+            >
+              {number + 1}
+            </Pagination.Item>
+          ))}
+        </Pagination>
+      )}
+
       <h2 className="mb-4 text-center">Fill Out Form</h2>
       <Row className="w-100">
-        {Array.from({ length: 5 }).map((_, idx) => (
-          <Col md={6} lg={4} className="mb-4" key={idx}>
+        {currentFillForms.map((_, idx) => (
+          <Col md={6} lg={4} className="mb-4" key={indexOfFirstFillItem + idx}>
             <Card className="hover-shadow-lg">
-              <Card.Header>Form {idx + 1}</Card.Header>
+              <Card.Header>Form {indexOfFirstFillItem + idx + 1}</Card.Header>
               <Card.Body>
-                <Card.Title>Form Title {idx + 1}</Card.Title>
+                <Card.Title>Form Title {indexOfFirstFillItem + idx + 1}</Card.Title>
                 <Card.Text>
-                  This is a description of form {idx + 1}. You can fill out this
-                  form.
+                  This is a description of form {indexOfFirstFillItem + idx + 1}. You can fill out this form.
                 </Card.Text>
                 <Button variant="success">Fill Out Form</Button>
               </Card.Body>
@@ -54,6 +92,20 @@ export const MainPage = (props) => {
           </Col>
         ))}
       </Row>
+
+      {totalPagesFill > 1 && (
+        <Pagination>
+          {[...Array(totalPagesFill).keys()].map((number) => (
+            <Pagination.Item
+              key={number + 1}
+              active={number + 1 === currentPageFill}
+              onClick={() => handleFillPageChange(number + 1)}
+            >
+              {number + 1}
+            </Pagination.Item>
+          ))}
+        </Pagination>
+      )}
     </Container>
   );
 };

@@ -39,7 +39,6 @@ html {
 
 .hover-shadow-lg {
   transition: box-shadow 0.3s ease-in-out;
-  background-color: black;
 }
 
 .hover-shadow-lg:hover {
