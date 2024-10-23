@@ -3,6 +3,7 @@ import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
+import { Link } from "react-router-dom";
 
 // questions
 import { CheckboxQuestion } from "../components/questions/CheckboxQuestion";
@@ -116,6 +117,17 @@ export const FormBuilder = (props) => {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
+      <Button
+        as={Link}
+        to="/"
+        variant="primary"
+        className="position-absolute d-block"
+        size="sm"
+        style={{ top: "10px", left: "10px" }}
+      >
+        Back to Main Page
+      </Button>
+
       <Container className="d-flex justify-content-center align-items-center min-vh-100">
         <Row className="w-100">
           <Col className="col-12 col-md-6">
