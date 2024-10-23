@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export const MainPage = (props) => {
   return (
-    <Container className="d-flex flex-column justify-content-center align-items-center min-vh-100">
+    <Container className="d-flex flex-column justify-content-center align-items-center min-vh-100 shadow bg-light p-5 rounded">
       <h1 className="text-center mb-5">Welcome to the Form Builder!</h1>
 
       <Button
@@ -21,7 +21,7 @@ export const MainPage = (props) => {
       <Row className="mb-5 w-100">
         {Array.from({ length: 5 }).map((_, idx) => (
           <Col md={6} lg={4} className="mb-4" key={idx}>
-            <Card>
+            <Card className="shadow-sm hover-shadow-lg">
               <Card.Header>Form {idx + 1}</Card.Header>
               <Card.Body>
                 <Card.Title>Form Title {idx + 1}</Card.Title>
@@ -40,7 +40,7 @@ export const MainPage = (props) => {
       <Row className="w-100">
         {Array.from({ length: 5 }).map((_, idx) => (
           <Col md={6} lg={4} className="mb-4" key={idx}>
-            <Card>
+            <Card className="shadow-sm hover-shadow-lg">
               <Card.Header>Form {idx + 1}</Card.Header>
               <Card.Body>
                 <Card.Title>Form Title {idx + 1}</Card.Title>
