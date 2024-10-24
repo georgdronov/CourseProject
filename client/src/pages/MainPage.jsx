@@ -23,7 +23,7 @@ export const MainPage = () => {
 
   useEffect(() => {
     fetchForms();
-  }, []);
+  }, []); 
 
   const indexOfLastEditItem = currentPageEdit * itemsPerPage;
   const indexOfFirstEditItem = indexOfLastEditItem - itemsPerPage;
@@ -71,7 +71,7 @@ export const MainPage = () => {
                 <Card.Text>
                   {form.description || "No description available"}
                 </Card.Text>
-                <Button variant="primary" as={Link} to={`/edit-form/${formId}`}>
+                <Button variant="primary" as={Link} to={`/edit-form/${form.id}`}>
                   Edit Form
                 </Button>
               </Card.Body>
