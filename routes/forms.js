@@ -1,5 +1,5 @@
 import { Router } from "express";
-import db from "../db.js"; 
+import db from "../db.js";
 
 const router = Router();
 
@@ -25,11 +25,13 @@ router.post("/", async (req, res) => {
 // Get all forms
 router.get("/", async (req, res) => {
   try {
-    const result = await db.query("SELECT * FROM forms");
-    res.status(200).send(result.rows);
-  } catch (err) {
-    console.error("Error retrieving forms:", err);
-    res.status(500).send("Error retrieving forms");
+    const { rows } = await db.pool.query(
+      "SELECT * FROM forms ORDER BY created_at DESC"
+    );
+    res.json(rows);
+  } catch (error) {
+    console.error("Error fetching forms:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
@@ -51,9 +53,5 @@ router.delete("/:id", async (req, res) => {
     res.status(500).send("Error deleting form");
   }
 });
-
-
-
-
 
 export default router;
