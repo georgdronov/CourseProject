@@ -3,7 +3,7 @@ import db from "../db.js";
 
 const router = Router();
 
-// Creating a new form
+// Create new form
 router.post("/", async (req, res) => {
   const { title, description, user_id } = req.body;
   try {
@@ -22,7 +22,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-// Getting all forms
+// Get all form
 router.get("/", async (req, res) => {
   try {
     const { rows } = await db.pool.query(
@@ -35,7 +35,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Getting a specific form by ID
+// Get form on ID
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
@@ -50,7 +50,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// Updating a form
+// Update form
 router.put("/:id", async (req, res) => {
   const { id } = req.params;
   const { title, description, user_id } = req.body;
@@ -75,7 +75,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-// Deleting a form
+// Delete form
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   try {

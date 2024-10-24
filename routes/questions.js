@@ -3,8 +3,8 @@ import db from "../db.js";
 
 const router = Router();
 
-// Creating questions for a form
-router.post("/questions", async (req, res) => {
+// Creating questions
+router.post("/", async (req, res) => {
   const questions = req.body;
   try {
     if (!Array.isArray(questions) || questions.length === 0) {
@@ -15,7 +15,7 @@ router.post("/questions", async (req, res) => {
       INSERT INTO questions (form_id, title, description, type, options, position, user_id)
       VALUES ($1, $2, $3, $4, $5, $6, $7)
       RETURNING *
-      `;
+    `;
 
     const results = [];
     for (const question of questions) {
@@ -38,8 +38,8 @@ router.post("/questions", async (req, res) => {
   }
 });
 
-// Get all questions for a specific form
-router.get("/questions/form/:form_id", async (req, res) => {
+// Get all questions on ID
+router.get("/form/:form_id", async (req, res) => {
   const { form_id } = req.params;
   try {
     const result = await db.query(
@@ -56,8 +56,8 @@ router.get("/questions/form/:form_id", async (req, res) => {
   }
 });
 
-// Get a specific question by ID
-router.get("/questions/:id", async (req, res) => {
+// Get question on по ID
+router.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const result = await db.query("SELECT * FROM questions WHERE id = $1", [
@@ -73,8 +73,8 @@ router.get("/questions/:id", async (req, res) => {
   }
 });
 
-// Delete a specific question by ID
-router.delete("/questions/:id", async (req, res) => {
+// Delete question on ID
+router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const questionExists = await db.query(
