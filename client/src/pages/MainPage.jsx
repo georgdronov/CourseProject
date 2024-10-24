@@ -25,6 +25,20 @@ export const MainPage = () => {
     fetchForms();
   }, []);
 
+  const handleDeleteForm = async (id) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this form?");
+    if (confirmDelete) {
+      try {
+        await fetch(`${process.env.REACT_APP_SERVER_URL}/forms/${id}`, {
+          method: "DELETE",
+        });
+        fetchForms(); // Refresh the list after deletion
+      } catch (error) {
+        console.error("Error deleting form:", error);
+      }
+    }
+  };
+
   const indexOfLastEditItem = currentPageEdit * itemsPerPage;
   const indexOfFirstEditItem = indexOfLastEditItem - itemsPerPage;
 
@@ -74,6 +88,13 @@ export const MainPage = () => {
                 <Button variant="primary" as={Link} to={`/form-builder/${form.id}`}>
                   Edit Form
                 </Button>
+                <Button
+                  variant="danger"
+                  onClick={() => handleDeleteForm(form.id)}
+                  className="ms-2"
+                >
+                  Delete Form
+                </Button>
               </Card.Body>
             </Card>
           </Col>
@@ -81,7 +102,7 @@ export const MainPage = () => {
       </Row>
 
       {totalPagesEdit > 1 && (
-        <Pagination className="mb-2">
+        <Pagination className="mb-4">
           {[...Array(totalPagesEdit).keys()].map((number) => (
             <Pagination.Item
               key={number + 1}
