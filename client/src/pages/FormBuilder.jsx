@@ -5,20 +5,18 @@ import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import { Link, useParams } from "react-router-dom";
 
-// questions
 import { CheckboxQuestion } from "../components/questions/CheckboxQuestion";
 import { MultiLineQuestion } from "../components/questions/MultiLineQuestion";
 import { NumberQuestion } from "../components/questions/NumberQuestion";
 import { SingleLineQuestion } from "../components/questions/SingleLineQuestion";
 
-// make questions
 import { MakeTitleQuestion } from "../components/make-titles/MakeTitleQuestion";
 import { MakeSingleLineQuestion } from "../components/make-question/MakeSingleLineQuestion";
 import { MakeMultiLineQuestion } from "../components/make-question/MakeMultiLineQuestion";
 import { MakeNumberQuestion } from "../components/make-question/MakeNumberQuestion";
 import { MakeCheckboxQuestion } from "../components/make-question/MakeCheckboxQuestion";
 
-export const FormBuilder = (props) => {
+export const FormBuilder = () => {
   const { id } = useParams();
 
   const [formTitle, setFormTitle] = useState("");
@@ -32,31 +30,39 @@ export const FormBuilder = (props) => {
         const formResponse = await axios.get(
           `${process.env.REACT_APP_SERVER_URL}/forms/${form_id}`
         );
-  
+
         const questionsResponse = await axios.get(
           `${process.env.REACT_APP_SERVER_URL}/questions/form/${form_id}`
         );
-  
+
         const form = formResponse.data;
-        setFormTitle(form.title);
-        setFormDescription(form.description);
-  
+        if (form && form.title && form.description) {
+          setFormTitle(form.title);
+          setFormDescription(form.description);
+        }
+
         const questions = questionsResponse.data;
-        setQuestions(questions);
+        if (Array.isArray(questions)) {
+          setQuestions(questions);
+        }
       } catch (error) {
-        console.error("Error loading form data:", error.response ? error.response.data : error.message);
+        console.error(
+          "Error loading form data:",
+          error.response ? error.response.data : error.message
+        );
       }
     };
-  
+
     if (id) {
       loadFormData(id);
     }
   }, [id]);
-  
 
   const handleUpdateForm = ({ title, description }) => {
-    setFormTitle(title);
-    setFormDescription(description);
+    if (title !== formTitle || description !== formDescription) {
+      setFormTitle(title);
+      setFormDescription(description);
+    }
   };
 
   const handleSaveForm = async () => {
@@ -86,7 +92,7 @@ export const FormBuilder = (props) => {
         }));
 
         const questionsResponse = await axios.post(
-          `${process.env.REACT_APP_SERVER_URL}/questions/questions`,
+          `${process.env.REACT_APP_SERVER_URL}/questions`,
           questionsData
         );
 
@@ -94,11 +100,9 @@ export const FormBuilder = (props) => {
           alert("Form and questions saved successfully!");
         } else {
           alert("Failed to save questions.");
-          console.error("Questions Response:", questionsResponse);
         }
       } else {
         alert("Failed to save the form.");
-        console.error("Form Response:", formResponse);
       }
     } catch (error) {
       console.error(
@@ -115,7 +119,7 @@ export const FormBuilder = (props) => {
 
   const handleCreateQuestion = () => {
     const newQuestion = {
-      id: questions.length + 1,
+      id: uuidv4(),
       type: selectedQuestionType,
       title: "",
       description: "",

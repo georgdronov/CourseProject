@@ -7,19 +7,26 @@ export const MakeTitleQuestion = ({
   onUpdate,
 }) => {
   const [localTitle, setLocalTitle] = useState(formTitle || "");
-  const [localDescription, setLocalDescription] = useState(
-    formDescription || ""
-  );
+  const [localDescription, setLocalDescription] = useState(formDescription || "");
+
+  useEffect(() => {
+    setLocalTitle(formTitle || "");
+  }, [formTitle]);
+
+  useEffect(() => {
+    setLocalDescription(formDescription || "");
+  }, [formDescription]);
 
   const handleUpdate = useCallback(() => {
     if (localTitle !== formTitle || localDescription !== formDescription) {
+      console.log("Updating:", { title: localTitle, description: localDescription });
       onUpdate({ title: localTitle, description: localDescription });
     }
   }, [localTitle, localDescription, formTitle, formDescription, onUpdate]);
 
   useEffect(() => {
     handleUpdate();
-  }, [localTitle, localDescription, handleUpdate]);
+  }, [localTitle, localDescription]); 
 
   return (
     <div className="mb-3">
