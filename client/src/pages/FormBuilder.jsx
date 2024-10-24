@@ -27,31 +27,32 @@ export const FormBuilder = (props) => {
   const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
-    const loadFormData = async () => {
+    const loadFormData = async (form_id) => {
       try {
         const formResponse = await axios.get(
-          `${process.env.REACT_APP_SERVER_URL}/forms/${id}`
+          `${process.env.REACT_APP_SERVER_URL}/forms/${form_id}`
         );
-
+  
         const questionsResponse = await axios.get(
-          `${process.env.REACT_APP_SERVER_URL}/questions/${id}`
+          `${process.env.REACT_APP_SERVER_URL}/questions/form/${form_id}`
         );
-
+  
         const form = formResponse.data;
         setFormTitle(form.title);
         setFormDescription(form.description);
-
+  
         const questions = questionsResponse.data;
         setQuestions(questions);
       } catch (error) {
         console.error("Error loading form data:", error.response ? error.response.data : error.message);
       }
     };
-
+  
     if (id) {
-      loadFormData();
+      loadFormData(id);
     }
   }, [id]);
+  
 
   const handleUpdateForm = ({ title, description }) => {
     setFormTitle(title);
