@@ -20,8 +20,14 @@ export const MainPage = (props) => {
   const indexOfLastFillItem = currentPageFill * itemsPerPage;
   const indexOfFirstFillItem = indexOfLastFillItem - itemsPerPage;
 
-  const currentEditForms = formsForEditing.slice(indexOfFirstEditItem, indexOfLastEditItem);
-  const currentFillForms = formsForFilling.slice(indexOfFirstFillItem, indexOfLastFillItem);
+  const currentEditForms = formsForEditing.slice(
+    indexOfFirstEditItem,
+    indexOfLastEditItem
+  );
+  const currentFillForms = formsForFilling.slice(
+    indexOfFirstFillItem,
+    indexOfLastFillItem
+  );
 
   const totalPagesEdit = Math.ceil(totalFormsEdit / itemsPerPage);
   const totalPagesFill = Math.ceil(totalFormsFill / itemsPerPage);
@@ -50,9 +56,12 @@ export const MainPage = (props) => {
             <Card className="hover-shadow-lg">
               <Card.Header>Form {indexOfFirstEditItem + idx + 1}</Card.Header>
               <Card.Body>
-                <Card.Title>Form Title {indexOfFirstEditItem + idx + 1}</Card.Title>
+                <Card.Title>
+                  Form Title {indexOfFirstEditItem + idx + 1}
+                </Card.Title>
                 <Card.Text>
-                  This is a description of form {indexOfFirstEditItem + idx + 1}. You can edit this form.
+                  This is a description of form {indexOfFirstEditItem + idx + 1}
+                  . You can edit this form.
                 </Card.Text>
                 <Button variant="primary">Edit Form</Button>
               </Card.Body>
@@ -82,9 +91,12 @@ export const MainPage = (props) => {
             <Card className="hover-shadow-lg">
               <Card.Header>Form {indexOfFirstFillItem + idx + 1}</Card.Header>
               <Card.Body>
-                <Card.Title>Form Title {indexOfFirstFillItem + idx + 1}</Card.Title>
+                <Card.Title>
+                  Form Title {indexOfFirstFillItem + idx + 1}
+                </Card.Title>
                 <Card.Text>
-                  This is a description of form {indexOfFirstFillItem + idx + 1}. You can fill out this form.
+                  This is a description of form {indexOfFirstFillItem + idx + 1}
+                  . You can fill out this form.
                 </Card.Text>
                 <Button variant="success">Fill Out Form</Button>
               </Card.Body>
@@ -94,7 +106,7 @@ export const MainPage = (props) => {
       </Row>
 
       {totalPagesFill > 1 && (
-        <Pagination>
+        <Pagination className="success-pagination">
           {[...Array(totalPagesFill).keys()].map((number) => (
             <Pagination.Item
               key={number + 1}
