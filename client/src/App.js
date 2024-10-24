@@ -12,8 +12,8 @@ function App() {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/form-builder" element={<FormBuilder />} />
-          <Route path="/edit-form/:id" element={<FormBuilder />} />
-          <Route path="/form-builder/:id" component={<FormBuilder />} />
+          <Route path="/form-builder/:id" element={<FormBuilder />} />
+          {/* <Route path="/edit-form/:id" element={<FormBuilder />} /> */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

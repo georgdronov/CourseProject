@@ -38,7 +38,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-// Get all questions on ID
+// Get all questions by form_id
 router.get("/form/:form_id", async (req, res) => {
   const { form_id } = req.params;
   try {
@@ -56,24 +56,7 @@ router.get("/form/:form_id", async (req, res) => {
   }
 });
 
-// Get question on по ID
-router.get("/:id", async (req, res) => {
-  const { id } = req.params;
-  try {
-    const result = await db.query("SELECT * FROM questions WHERE id = $1", [
-      id,
-    ]);
-    if (result.rowCount === 0) {
-      return res.status(404).send("Question not found");
-    }
-    res.status(200).send(result.rows[0]);
-  } catch (err) {
-    console.error("Error retrieving question:", err);
-    res.status(500).send("Error retrieving question");
-  }
-});
-
-// Delete question on ID
+// Delete question by ID
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   try {
