@@ -32,7 +32,7 @@ export const MainPage = () => {
         await fetch(`${process.env.REACT_APP_SERVER_URL}/forms/${id}`, {
           method: "DELETE",
         });
-        fetchForms(); // Refresh the list after deletion
+        fetchForms(); 
       } catch (error) {
         console.error("Error deleting form:", error);
       }
