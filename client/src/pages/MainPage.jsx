@@ -23,7 +23,7 @@ export const MainPage = () => {
 
   useEffect(() => {
     fetchForms();
-  }, []); 
+  }, []);
 
   const indexOfLastEditItem = currentPageEdit * itemsPerPage;
   const indexOfFirstEditItem = indexOfLastEditItem - itemsPerPage;
