@@ -19,13 +19,13 @@ export const MakeTitleQuestion = ({
 
   const handleUpdate = useCallback(() => {
     if (localTitle !== formTitle || localDescription !== formDescription) {
-      console.log("Updating:", { title: localTitle, description: localDescription });
       onUpdate({ title: localTitle, description: localDescription });
     }
   }, [localTitle, localDescription, formTitle, formDescription, onUpdate]);
 
   useEffect(() => {
     handleUpdate();
+    // eslint-disable-next-line
   }, [localTitle, localDescription]); 
 
   return (
