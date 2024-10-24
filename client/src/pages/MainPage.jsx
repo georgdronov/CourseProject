@@ -71,7 +71,7 @@ export const MainPage = () => {
                 <Card.Text>
                   {form.description || "No description available"}
                 </Card.Text>
-                <Button variant="primary" as={Link} to={`/edit-form/${form.id}`}>
+                <Button variant="primary" as={Link} to={`/form-builder/${form.id}`}>
                   Edit Form
                 </Button>
               </Card.Body>
