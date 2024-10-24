@@ -14,7 +14,7 @@ export const MainPage = () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/forms`);
       const data = await response.json();
-      setEditForms(data); 
+      setEditForms(data);
       setFillForms(data);
     } catch (error) {
       console.error("Error fetching forms:", error);
@@ -22,7 +22,7 @@ export const MainPage = () => {
   };
 
   useEffect(() => {
-    fetchForms(); 
+    fetchForms();
   }, []);
 
   const indexOfLastEditItem = currentPageEdit * itemsPerPage;
@@ -31,8 +31,14 @@ export const MainPage = () => {
   const indexOfLastFillItem = currentPageFill * itemsPerPage;
   const indexOfFirstFillItem = indexOfLastFillItem - itemsPerPage;
 
-  const currentEditForms = editForms.slice(indexOfFirstEditItem, indexOfLastEditItem);
-  const currentFillForms = fillForms.slice(indexOfFirstFillItem, indexOfLastFillItem);
+  const currentEditForms = editForms.slice(
+    indexOfFirstEditItem,
+    indexOfLastEditItem
+  );
+  const currentFillForms = fillForms.slice(
+    indexOfFirstFillItem,
+    indexOfLastFillItem
+  );
 
   const totalPagesEdit = Math.ceil(editForms.length / itemsPerPage);
   const totalPagesFill = Math.ceil(fillForms.length / itemsPerPage);
@@ -62,8 +68,12 @@ export const MainPage = () => {
               <Card.Header>{form.title}</Card.Header>
               <Card.Body>
                 <Card.Title>{form.title}</Card.Title>
-                <Card.Text>{form.description || "No description available"}</Card.Text>
-                <Button variant="primary">Edit Form</Button>
+                <Card.Text>
+                  {form.description || "No description available"}
+                </Card.Text>
+                <Button variant="primary" as={Link} to={`/edit-form/${formId}`}>
+                  Edit Form
+                </Button>
               </Card.Body>
             </Card>
           </Col>
@@ -92,7 +102,9 @@ export const MainPage = () => {
               <Card.Header>{form.title}</Card.Header>
               <Card.Body>
                 <Card.Title>{form.title}</Card.Title>
-                <Card.Text>{form.description || "No description available"}</Card.Text>
+                <Card.Text>
+                  {form.description || "No description available"}
+                </Card.Text>
                 <Button variant="success">Fill Out Form</Button>
               </Card.Body>
             </Card>
