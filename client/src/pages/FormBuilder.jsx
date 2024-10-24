@@ -44,7 +44,7 @@ export const FormBuilder = (props) => {
         const questions = questionsResponse.data;
         setQuestions(questions);
       } catch (error) {
-        console.error("Error loading form data:", error);
+        console.error("Error loading form data:", error.response ? error.response.data : error.message);
       }
     };
 
