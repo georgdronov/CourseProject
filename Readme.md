@@ -10,8 +10,8 @@ Quizzes, tests, questionnaires, polls, etc.
 - [x] You can add more than four questions
 - [x] You can save the completed form
 - [x] On the main page, you can view all forms with pagination
-- [x] On the main page, you can select a form and edit it
 - [x] On the main page, you can delete a form
+- [x] On the main page, you can select a form and edit it
 - [ ] You can save the edited form
 - [ ] You can fill out the created form
 - [ ] Authorization
@@ -22,7 +22,7 @@ Quizzes, tests, questionnaires, polls, etc.
 [courseproject-5nrc.onrender.com](https://courseproject-5nrc.onrender.com)
 
 - **Vercel for React**
-[https://course-project-rust-seven.vercel.app/](https://https://course-project-rust-seven.vercel.app/)
+[https://course-project-rust-seven.vercel.app/](https://course-project-rust-seven.vercel.app/)
 
 ### Backend
 The backend is built using **Node.js** and leverages the following libraries:
