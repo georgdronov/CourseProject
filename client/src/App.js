@@ -13,6 +13,7 @@ function App() {
           <Route path="/" element={<MainPage />} />
           <Route path="/form-builder" element={<FormBuilder />} />
           <Route path="*" element={<NotFound />} />
+          <Route path="/edit-form/:id" element={<FormBuilder />} />
         </Routes>
       </div>
     </Router>
