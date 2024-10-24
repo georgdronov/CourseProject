@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import axios from "axios";
@@ -26,7 +26,32 @@ export const FormBuilder = (props) => {
   const [selectedQuestionType, setSelectedQuestionType] = useState("");
   const [questions, setQuestions] = useState([]);
 
-  
+  useEffect(() => {
+    const loadFormData = async () => {
+      try {
+        const formResponse = await axios.get(
+          `${process.env.REACT_APP_SERVER_URL}/forms/${id}`
+        );
+
+        const questionsResponse = await axios.get(
+          `${process.env.REACT_APP_SERVER_URL}/questions/${id}`
+        );
+
+        const form = formResponse.data;
+        setFormTitle(form.title);
+        setFormDescription(form.description);
+
+        const questions = questionsResponse.data;
+        setQuestions(questions);
+      } catch (error) {
+        console.error("Error loading form data:", error);
+      }
+    };
+
+    if (id) {
+      loadFormData();
+    }
+  }, [id]);
 
   const handleUpdateForm = ({ title, description }) => {
     setFormTitle(title);
