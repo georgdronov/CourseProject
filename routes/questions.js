@@ -1,5 +1,5 @@
 import { Router } from "express";
-import db from "../db.js"; 
+import db from "../db.js";
 
 const router = Router();
 
@@ -39,7 +39,7 @@ router.post("/questions", async (req, res) => {
 });
 
 // Get all questions for a specific form
-router.get("/questions/:form_id", async (req, res) => {
+router.get("/questions/form/:form_id", async (req, res) => {
   const { form_id } = req.params;
   try {
     const result = await db.query(
@@ -56,7 +56,24 @@ router.get("/questions/:form_id", async (req, res) => {
   }
 });
 
-// Delete question
+// Get a specific question by ID
+router.get("/questions/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await db.query("SELECT * FROM questions WHERE id = $1", [
+      id,
+    ]);
+    if (result.rowCount === 0) {
+      return res.status(404).send("Question not found");
+    }
+    res.status(200).send(result.rows[0]);
+  } catch (err) {
+    console.error("Error retrieving question:", err);
+    res.status(500).send("Error retrieving question");
+  }
+});
+
+// Delete a specific question by ID
 router.delete("/questions/:id", async (req, res) => {
   const { id } = req.params;
   try {
