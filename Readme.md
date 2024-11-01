@@ -19,6 +19,8 @@ The backend is built using **Node.js** and leverages the following libraries:
 - **сors** :  For CORS headers
 - **bcryptjs** : For password hashing
 - **express-validator**  : For form validation
+- **jwt**  : For authentication and authorization
+
 
 
 ### Frontend
