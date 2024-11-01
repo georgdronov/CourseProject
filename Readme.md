@@ -17,7 +17,7 @@ The backend is built using **Node.js** and leverages the following libraries:
 - **pg**: For connect to DB
 - **axios**  : For HTTP requests
 - **сors** :  For CORS headers
-- **bcrypt** : For password hashing
+- **bcryptjs** : For password hashing
 - **express-validator**  : For form validation
 
 
