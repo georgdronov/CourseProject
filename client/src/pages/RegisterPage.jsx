@@ -14,13 +14,16 @@ export const RegisterPage = () => {
     setSuccess("");
 
     try {
-      const response = await fetch("http://localhost:5000/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, password }),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_SERVER_URL}/auth/register`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username, password }),
+        }
+      );
 
       const data = await response.json();
 
@@ -37,21 +40,37 @@ export const RegisterPage = () => {
   };
 
   return (
-    <Container className="d-flex align-items-center justify-content-center" style={{ height: "100vh" }}>
+    <Container
+      className="d-flex align-items-center justify-content-center"
+      style={{ height: "100vh" }}
+    >
       <Header />
-      <Form className="w-50 bg-light p-5 rounded shadow" onSubmit={handleSubmit}>
+      <Form
+        className="w-50 bg-light p-5 rounded shadow"
+        onSubmit={handleSubmit}
+      >
         <h2 className="mb-4 text-center">Register</h2>
         {error && <Alert variant="danger">{error}</Alert>}
         {success && <Alert variant="success">{success}</Alert>}
 
         <Form.Group controlId="formBasicUsername" className="mb-3">
           <Form.Label>Username</Form.Label>
-          <Form.Control type="text" placeholder="Enter username" value={username} onChange={(e) => setUsername(e.target.value)} />
+          <Form.Control
+            type="text"
+            placeholder="Enter username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
         </Form.Group>
 
         <Form.Group controlId="formBasicPassword" className="mb-3">
           <Form.Label>Password</Form.Label>
-          <Form.Control type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <Form.Control
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
         </Form.Group>
 
         <Button variant="success" type="submit" className="w-100 mt-3">
