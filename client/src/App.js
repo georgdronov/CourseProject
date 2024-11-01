@@ -6,6 +6,7 @@ import { MainPage } from "./pages/MainPage";
 import { NotFound } from "./pages/NotFound";
 import {LoginPage} from "./pages/LoginPage"
 import { RegisterPage } from "./pages/RegisterPage";
+import { ProfilePage } from "./pages/ProfilePage";
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Route path="/form-builder/:id" element={<FormBuilder />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/profile" element={<ProfilePage/>} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
