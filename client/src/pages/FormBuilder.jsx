@@ -3,7 +3,7 @@ import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
-import { Link, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 
 import { CheckboxQuestion } from "../components/questions/CheckboxQuestion";
 import { MultiLineQuestion } from "../components/questions/MultiLineQuestion";
@@ -15,6 +15,7 @@ import { MakeSingleLineQuestion } from "../components/make-question/MakeSingleLi
 import { MakeMultiLineQuestion } from "../components/make-question/MakeMultiLineQuestion";
 import { MakeNumberQuestion } from "../components/make-question/MakeNumberQuestion";
 import { MakeCheckboxQuestion } from "../components/make-question/MakeCheckboxQuestion";
+import { Header } from "../components/page-component/Header";
 
 export const FormBuilder = () => {
   const { id } = useParams();
@@ -151,18 +152,8 @@ export const FormBuilder = () => {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <Button
-        as={Link}
-        to="/"
-        variant="primary"
-        className="position-absolute d-block"
-        size="sm"
-        style={{ top: "10px", left: "10px" }}
-      >
-        Back to Main Page
-      </Button>
-
-      <Container className="d-flex justify-content-center align-items-center min-vh-100">
+      <Header/>
+      <Container className="d-flex justify-content-center align-items-center min-vh-100 mt-5">
         <Row className="w-100">
           <Col className="col-12 col-md-6">
             <div className="shadow bg-light p-5 rounded">

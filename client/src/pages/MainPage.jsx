@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button, Card, Pagination } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { Header } from "../components/page-component/Header";
 
 export const MainPage = () => {
   const itemsPerPage = 6;
@@ -26,13 +27,15 @@ export const MainPage = () => {
   }, []);
 
   const handleDeleteForm = async (id) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this form?");
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this form?"
+    );
     if (confirmDelete) {
       try {
         await fetch(`${process.env.REACT_APP_SERVER_URL}/forms/${id}`, {
           method: "DELETE",
         });
-        fetchForms(); 
+        fetchForms();
       } catch (error) {
         console.error("Error deleting form:", error);
       }
@@ -61,7 +64,8 @@ export const MainPage = () => {
   const handleFillPageChange = (pageNumber) => setCurrentPageFill(pageNumber);
 
   return (
-    <Container className="d-flex flex-column justify-content-center align-items-center min-vh-100 shadow bg-light p-5 rounded">
+    <Container className="d-flex flex-column justify-content-center align-items-center min-vh-100 shadow bg-light p-5 rounded mt-5">
+      <Header />
       <h1 className="text-center mb-5">Welcome to the Form Builder!</h1>
 
       <Button
@@ -85,7 +89,11 @@ export const MainPage = () => {
                 <Card.Text>
                   {form.description || "No description available"}
                 </Card.Text>
-                <Button variant="primary" as={Link} to={`/form-builder/${form.id}`}>
+                <Button
+                  variant="primary"
+                  as={Link}
+                  to={`/form-builder/${form.id}`}
+                >
                   Edit Form
                 </Button>
                 <Button
