@@ -1,34 +1,41 @@
 import React, { useState } from "react";
 import { Container, Form, Button } from "react-bootstrap";
 import { Header } from "../components/page-component/Header";
+import { useNavigate } from "react-router-dom";
 
 export const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrorMessage("");
 
-    const response = await fetch(
-      `${process.env.REACT_APP_SERVER_URL}/auth/login`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, password }),
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_SERVER_URL}/auth/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username, password }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("username", username); 
+        navigate("/"); 
+      } else {
+        setError(data.message || "Login failed");
       }
-    );
-
-    const data = await response.json();
-
-    if (response.ok) {
-      localStorage.setItem("token", data.token);
-      console.log("Login successful");
-    } else {
-      setErrorMessage(data.message);
+    } catch (error) {
+      console.error("Error:", error);
+      setError("Login failed");
     }
   };
 
@@ -38,9 +45,12 @@ export const LoginPage = () => {
       style={{ height: "100vh" }}
     >
       <Header />
-      <Form className="w-50 bg-light p-5 rounded shadow" onSubmit={handleLogin}>
+      <Form
+        className="w-50 bg-light p-5 rounded shadow"
+        onSubmit={handleSubmit}
+      >
         <h2 className="mb-4 text-center">Login</h2>
-        {errorMessage && <p className="text-danger">{errorMessage}</p>}
+        {error && <p className="text-danger">{error}</p>}
         <Form.Group controlId="formBasicEmail" className="mb-3">
           <Form.Label>Username</Form.Label>
           <Form.Control
