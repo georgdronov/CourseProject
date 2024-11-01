@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { Container, Row, Col, Card, Button, Modal, Form } from "react-bootstrap";
 import { Header } from "../components/page-component/Header";
-import Loader from "../components/page-component/Spinner";
 import { Link } from "react-router-dom";
 
 export const ProfilePage = () => {
   const [userForms, setUserForms] = useState([]);
   const [username, setUsername] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    consent: false,
+  });
 
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
@@ -34,7 +40,6 @@ export const ProfilePage = () => {
         await fetch(`${process.env.REACT_APP_SERVER_URL}/forms/${id}`, {
           method: "DELETE",
         });
-        // Update the forms list after deletion
         setUserForms(userForms.filter(form => form.id !== id));
       } catch (error) {
         console.error("Error deleting form:", error);
@@ -42,10 +47,26 @@ export const ProfilePage = () => {
     }
   };
 
+  const handleModalShow = () => setShowModal(true);
+  const handleModalClose = () => setShowModal(false);
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Form data submitted:", formData);
+    handleModalClose(); 
+  };
+
   return (
     <Container className="d-flex flex-column justify-content-center align-items-center min-vh-100 shadow bg-light p-5 rounded mt-5">
       <Header />
-      <Loader />
       <h1 className="text-center mb-5">Hello, {username}!</h1>
       <h2 className="text-center mb-4">Your Forms</h2>
 
@@ -60,7 +81,7 @@ export const ProfilePage = () => {
                 <Card.Body>
                   <Card.Title>{form.title}</Card.Title>
                   <Card.Text>
-                    {form.description || "Нет доступного описания"}
+                    {form.description || "No description available"}
                   </Card.Text>
                   <Button variant="primary" as={Link} to={`/form-builder/${form.id}`}>
                     Edit Form
@@ -78,6 +99,71 @@ export const ProfilePage = () => {
           ))}
         </Row>
       )}
+
+      <h2 className="text-center mt-5">Additional Information</h2>
+      <p className="text-center mb-4">
+        Subscribe to our newsletter to stay updated with the latest news and insights! 
+        Join our community and never miss out on valuable information that can help you grow and succeed.
+      </p>
+      <Button variant="info" onClick={handleModalShow}>
+        Subscribe to Newsletter
+      </Button>
+
+      <Modal show={showModal} onHide={handleModalClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Newsletter Subscription</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-3">
+              <Form.Label>First Name</Form.Label>
+              <Form.Control 
+                type="text" 
+                placeholder="Enter your first name" 
+                name="firstName" 
+                value={formData.firstName} 
+                onChange={handleChange} 
+                required 
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Last Name</Form.Label>
+              <Form.Control 
+                type="text" 
+                placeholder="Enter your last name" 
+                name="lastName" 
+                value={formData.lastName} 
+                onChange={handleChange} 
+                required 
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Email</Form.Label>
+              <Form.Control 
+                type="email" 
+                placeholder="Enter your email" 
+                name="email" 
+                value={formData.email} 
+                onChange={handleChange} 
+                required 
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Check 
+                type="checkbox" 
+                label="I confirm that my personal data can be processed" 
+                name="consent" 
+                checked={formData.consent} 
+                onChange={handleChange} 
+                required 
+              />
+            </Form.Group>
+            <Button variant="primary" type="submit">
+              Subscribe
+            </Button>
+          </Form>
+        </Modal.Body>
+      </Modal>
     </Container>
   );
 };
