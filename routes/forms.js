@@ -5,15 +5,15 @@ const router = Router();
 
 // Create new form
 router.post("/", async (req, res) => {
-  const { title, description, user_id } = req.body;
+  const { title, description, username } = req.body;
   try {
-    if (!title || !description || !user_id) {
+    if (!title || !description || !username) {
       return res.status(400).send("Missing required fields");
     }
 
     const result = await db.query(
-      "INSERT INTO forms (title, description, user_id) VALUES ($1, $2, $3) RETURNING *",
-      [title, description, user_id]
+      "INSERT INTO forms (title, description, username) VALUES ($1, $2, $3) RETURNING *",
+      [title, description, username]
     );
     res.status(201).send(result.rows[0]);
   } catch (err) {
