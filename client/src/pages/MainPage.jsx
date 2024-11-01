@@ -16,7 +16,6 @@ export const MainPage = () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/forms`);
       const data = await response.json();
-      console.log("Fetched forms:", data);
       setEditForms(data);
       setFillForms(data);
     } catch (error) {
@@ -31,10 +30,9 @@ export const MainPage = () => {
           `${process.env.REACT_APP_SERVER_URL}/users/${form.userId}`
         );
         const userData = await response.json();
-        return { ...form, username: userData.username };
-      } else {
-        return { ...form, username: "Unknown" };
+        return { ...form, username: userData.username || "Unknown" };
       }
+      return { ...form, username: "Unknown" };
     });
 
     return Promise.all(promises);
@@ -53,15 +51,17 @@ export const MainPage = () => {
   useEffect(() => {
     const addUsernamesToForms = async () => {
       const editFormsWithUsernames = await fetchUsernames(editForms);
-      const fillFormsWithUsernames = await fetchUsernames(fillForms);
       setEditForms(editFormsWithUsernames);
+
+      const fillFormsWithUsernames = await fetchUsernames(fillForms);
       setFillForms(fillFormsWithUsernames);
     };
 
-    if (editForms.length > 0) {
+    if (editForms.length > 0 || fillForms.length > 0) {
       addUsernamesToForms();
     }
-  }, [editForms, fillForms]);
+    // eslint-disable-next-line
+  }, [editForms.length, fillForms.length]);
 
   const handleDeleteForm = async (id) => {
     const confirmDelete = window.confirm(
