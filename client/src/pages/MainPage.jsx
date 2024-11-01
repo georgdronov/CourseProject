@@ -6,8 +6,8 @@ import { Header } from "../components/page-component/Header";
 export const MainPage = () => {
   const itemsPerPage = 6;
 
-  const [editForms, setEditForms] = useState([]); 
-  const [fillForms, setFillForms] = useState([]); 
+  const [editForms, setEditForms] = useState([]);
+  const [fillForms, setFillForms] = useState([]);
   const [currentPageEdit, setCurrentPageEdit] = useState(1);
   const [currentPageFill, setCurrentPageFill] = useState(1);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -23,19 +23,20 @@ export const MainPage = () => {
       console.error("Error fetching forms:", error);
     }
   };
-  
 
   const fetchUsernames = async (formArray) => {
     const promises = formArray.map(async (form) => {
-      if (form.userId) {  
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/users/${form.userId}`);
+      if (form.userId) {
+        const response = await fetch(
+          `${process.env.REACT_APP_SERVER_URL}/users/${form.userId}`
+        );
         const userData = await response.json();
-        return { ...form, username: userData.username }; 
+        return { ...form, username: userData.username };
       } else {
-        return { ...form, username: "Unknown" }; 
+        return { ...form, username: "Unknown" };
       }
     });
-  
+
     return Promise.all(promises);
   };
 
@@ -58,12 +59,14 @@ export const MainPage = () => {
     };
 
     if (editForms.length > 0) {
-      addUsernamesToForms(); 
+      addUsernamesToForms();
     }
-  }, [editForms, fillForms]); 
+  }, [editForms, fillForms]);
 
   const handleDeleteForm = async (id) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this form?");
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this form?"
+    );
     if (confirmDelete) {
       try {
         await fetch(`${process.env.REACT_APP_SERVER_URL}/forms/${id}`, {
@@ -82,8 +85,14 @@ export const MainPage = () => {
   const indexOfLastFillItem = currentPageFill * itemsPerPage;
   const indexOfFirstFillItem = indexOfLastFillItem - itemsPerPage;
 
-  const currentEditForms = editForms.slice(indexOfFirstEditItem, indexOfLastEditItem);
-  const currentFillForms = fillForms.slice(indexOfFirstFillItem, indexOfLastFillItem);
+  const currentEditForms = editForms.slice(
+    indexOfFirstEditItem,
+    indexOfLastEditItem
+  );
+  const currentFillForms = fillForms.slice(
+    indexOfFirstFillItem,
+    indexOfLastFillItem
+  );
 
   const totalPagesEdit = Math.ceil(editForms.length / itemsPerPage);
   const totalPagesFill = Math.ceil(fillForms.length / itemsPerPage);
@@ -119,9 +128,7 @@ export const MainPage = () => {
             {currentEditForms.map((form) => (
               <Col md={6} lg={4} className="mb-4" key={form.id}>
                 <Card className="hover-shadow-lg">
-                  <Card.Header>
-                    Author: {form.username}
-                  </Card.Header>
+                  <Card.Header>Author: {form.username}</Card.Header>
                   <Card.Body>
                     <Card.Title>{form.title}</Card.Title>
                     <Card.Text>
@@ -168,9 +175,7 @@ export const MainPage = () => {
         {currentFillForms.map((form) => (
           <Col md={6} lg={4} className="mb-4" key={form.id}>
             <Card className="hover-shadow-lg">
-              <Card.Header>
-                Author: {form.username}
-              </Card.Header>
+              <Card.Header>Author: {form.username}</Card.Header>
               <Card.Body>
                 <Card.Title>{form.title}</Card.Title>
                 <Card.Text>
