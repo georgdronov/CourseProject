@@ -19,10 +19,10 @@ export const Header = ({ username }) => {
 
         <div className="d-flex align-items-center">
           <span className="me-3">Hello {username ? username : "Guest"}!</span>
-          <Button variant="outline-primary" size="sm" className="me-2">
+          <Button as={Link} to="/login" variant="outline-primary" size="sm" className="me-2">
             Login
           </Button>
-          <Button variant="outline-success" size="sm">
+          <Button as={Link} to="/register" variant="outline-success" size="sm">
             Register
           </Button>
         </div>
