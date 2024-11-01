@@ -5,6 +5,7 @@ const router = express.Router();
 
 router.get('/:id', async (req, res) => {
   const userId = req.params.id;
+  console.log(`Fetching user with ID: ${userId}`); 
   try {
     const [user] = await db.query('SELECT id, username FROM users WHERE id = ?', [userId]);
     if (user) {
@@ -17,5 +18,6 @@ router.get('/:id', async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+
 
 export default router; 
