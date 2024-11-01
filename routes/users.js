@@ -1,13 +1,14 @@
-const express = require('express');
+import express from 'express';
+import db from "../db.js";
+
 const router = express.Router();
-const db = require('./db'); 
 
 router.get('/:id', async (req, res) => {
   const userId = req.params.id;
   try {
     const [user] = await db.query('SELECT id, username FROM users WHERE id = ?', [userId]);
     if (user) {
-      res.json(user); 
+      res.json(user);
     } else {
       res.status(404).json({ message: 'User not found' });
     }
@@ -17,4 +18,4 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router; 
