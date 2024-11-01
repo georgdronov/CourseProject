@@ -12,7 +12,7 @@ router.post("/", async (req, res) => {
     }
 
     const query = `
-      INSERT INTO questions (form_id, title, description, type, options, position, user_id)
+      INSERT INTO questions (form_id, title, description, type, options, position, username)
       VALUES ($1, $2, $3, $4, $5, $6, $7)
       RETURNING *
     `;
@@ -26,7 +26,7 @@ router.post("/", async (req, res) => {
         question.type,
         question.options,
         question.position,
-        question.user_id,
+        question.username,
       ]);
       results.push(result.rows[0]);
     }

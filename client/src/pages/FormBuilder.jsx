@@ -71,7 +71,7 @@ export const FormBuilder = () => {
       const formData = {
         title: formTitle,
         description: formDescription,
-        user_id: localStorage.getItem('username'), 
+        username: localStorage.getItem('username'), 
       };
   
       const formResponse = await axios.post(
@@ -89,7 +89,7 @@ export const FormBuilder = () => {
           type: question.type,
           options: question.options,
           position: index + 1,
-          user_id: localStorage.getItem('username'),
+          username: localStorage.getItem('username'),
         }));
   
         const questionsResponse = await axios.post(
