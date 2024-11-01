@@ -3,8 +3,10 @@ import dotenv from "dotenv";
 import cors from "cors";
 import formsRouter from "./routes/forms.js";
 import questionRouter from "./routes/questions.js";
-import answerRouter from "./routes/answers.js"; 
+import answerRouter from "./routes/answers.js";
 import authRouter from "./routes/auth.js";
+import userRouter from "./routes/users.js";
+
 import db from "./db.js";
 
 dotenv.config();
@@ -35,8 +37,9 @@ app.use(express.json());
 
 app.use("/forms", formsRouter);
 app.use("/questions", questionRouter);
-app.use("/answers", answerRouter); 
+app.use("/answers", answerRouter);
 app.use("/auth", authRouter);
+app.use("/users", userRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello from server.js");
