@@ -53,3 +53,4 @@ db.pool.on("error", (err) => {
 app.listen(port, () => {
   console.log(`Listening at Port: ${port}`);
 });
+
