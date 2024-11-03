@@ -19,6 +19,7 @@ export const ProfilePage = () => {
     firstName: "",
     lastName: "",
     email: "",
+    phone: "",
     consent: false,
   });
 
@@ -61,12 +62,8 @@ export const ProfilePage = () => {
     }
   };
 
-  const handleModalShow = () => {
-    setShowModal(true);
-  };
-  const handleModalClose = () => {
-    setShowModal(false);
-  };
+  const handleModalShow = () => setShowModal(true);
+  const handleModalClose = () => setShowModal(false);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -92,19 +89,22 @@ export const ProfilePage = () => {
       );
 
       if (response.ok) {
-        alert("Data successfully sent to Salesforce!");
+        alert("Information successfully sent to Salesforce!");
         setFormData({
           firstName: "",
           lastName: "",
           email: "",
+          phone: "", 
           consent: false,
         });
       } else {
-        alert("Failed to send data to Salesforce.");
+        const errorData = await response.json();
+        console.error("Error sending to Salesforce:", errorData);
+        alert("Failed to send information to Salesforce.");
       }
     } catch (error) {
-      console.error("Error submitting data:", error);
-      alert("An error occurred while submitting data.");
+      console.error("Error sending data:", error);
+      alert("An error occurred while sending data.");
     }
 
     handleModalClose();
@@ -197,6 +197,17 @@ export const ProfilePage = () => {
                 placeholder="Enter your email"
                 name="email"
                 value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Phone</Form.Label>
+              <Form.Control
+                type="tel"
+                placeholder="Enter your phone number"
+                name="phone"
+                value={formData.phone}
                 onChange={handleChange}
                 required
               />
