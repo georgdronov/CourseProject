@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Card, Button, Modal, Form } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  Button,
+  Modal,
+  Form,
+} from "react-bootstrap";
 import { Header } from "../components/page-component/Header";
 import { Link } from "react-router-dom";
 
@@ -20,10 +28,14 @@ export const ProfilePage = () => {
 
     const fetchUserForms = async () => {
       try {
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/forms`);
+        const response = await fetch(
+          `${process.env.REACT_APP_SERVER_URL}/forms`
+        );
         const data = await response.json();
 
-        const filteredForms = data.filter(form => form.username === storedUsername);
+        const filteredForms = data.filter(
+          (form) => form.username === storedUsername
+        );
         setUserForms(filteredForms);
       } catch (error) {
         console.error("Error loading user forms:", error);
@@ -34,21 +46,27 @@ export const ProfilePage = () => {
   }, []);
 
   const handleDeleteForm = async (id) => {
-    const confirmDelete = window.confirm("Вы уверены, что хотите удалить эту форму?");
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this form?"
+    );
     if (confirmDelete) {
       try {
         await fetch(`${process.env.REACT_APP_SERVER_URL}/forms/${id}`, {
           method: "DELETE",
         });
-        setUserForms(userForms.filter(form => form.id !== id));
+        setUserForms(userForms.filter((form) => form.id !== id));
       } catch (error) {
         console.error("Error deleting form:", error);
       }
     }
   };
 
-  const handleModalShow = () => setShowModal(true);
-  const handleModalClose = () => setShowModal(false);
+  const handleModalShow = () => {
+    setShowModal(true);
+  };
+  const handleModalClose = () => {
+    setShowModal(false);
+  };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -62,16 +80,19 @@ export const ProfilePage = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/salesforce/createAccount`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_SERVER_URL}/salesforce/createAccount`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       if (response.ok) {
-        alert("Информация успешно отправлена в Salesforce!");
+        alert("Data successfully sent to Salesforce!");
         setFormData({
           firstName: "",
           lastName: "",
@@ -79,13 +100,11 @@ export const ProfilePage = () => {
           consent: false,
         });
       } else {
-        const errorData = await response.json();
-        console.error("Ошибка при отправке в Salesforce:", errorData);
-        alert("Не удалось отправить информацию в Salesforce.");
+        alert("Failed to send data to Salesforce.");
       }
     } catch (error) {
-      console.error("Ошибка при отправке данных:", error);
-      alert("Произошла ошибка при отправке данных.");
+      console.error("Error submitting data:", error);
+      alert("An error occurred while submitting data.");
     }
 
     handleModalClose();
@@ -98,7 +117,9 @@ export const ProfilePage = () => {
       <h2 className="text-center mb-4">Your Forms</h2>
 
       {userForms.length === 0 ? (
-        <p className="text-danger text-center">You have not created any forms yet.</p>
+        <p className="text-danger text-center">
+          You have not created any forms yet.
+        </p>
       ) : (
         <Row className="w-100">
           {userForms.map((form) => (
@@ -110,7 +131,11 @@ export const ProfilePage = () => {
                   <Card.Text>
                     {form.description || "No description available"}
                   </Card.Text>
-                  <Button variant="primary" as={Link} to={`/form-builder/${form.id}`}>
+                  <Button
+                    variant="primary"
+                    as={Link}
+                    to={`/form-builder/${form.id}`}
+                  >
                     Edit Form
                   </Button>
                   <Button
@@ -129,8 +154,9 @@ export const ProfilePage = () => {
 
       <h2 className="text-center mt-5">Additional Information</h2>
       <p className="text-center mb-4">
-        Subscribe to our newsletter to stay updated with the latest news and insights! 
-        Join our community and never miss out on valuable information that can help you grow and succeed.
+        Subscribe to our newsletter to stay updated with the latest news and
+        insights! Join our community and never miss out on valuable information
+        that can help you grow and succeed.
       </p>
       <Button variant="info" onClick={handleModalShow}>
         Subscribe to Newsletter
@@ -144,45 +170,45 @@ export const ProfilePage = () => {
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3">
               <Form.Label>First Name</Form.Label>
-              <Form.Control 
-                type="text" 
-                placeholder="Enter your first name" 
-                name="firstName" 
-                value={formData.firstName} 
-                onChange={handleChange} 
-                required 
+              <Form.Control
+                type="text"
+                placeholder="Enter your first name"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleChange}
+                required
               />
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Last Name</Form.Label>
-              <Form.Control 
-                type="text" 
-                placeholder="Enter your last name" 
-                name="lastName" 
-                value={formData.lastName} 
-                onChange={handleChange} 
-                required 
+              <Form.Control
+                type="text"
+                placeholder="Enter your last name"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleChange}
+                required
               />
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Email</Form.Label>
-              <Form.Control 
-                type="email" 
-                placeholder="Enter your email" 
-                name="email" 
-                value={formData.email} 
-                onChange={handleChange} 
-                required 
+              <Form.Control
+                type="email"
+                placeholder="Enter your email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
               />
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Check 
-                type="checkbox" 
-                label="I confirm that my personal data can be processed" 
-                name="consent" 
-                checked={formData.consent} 
-                onChange={handleChange} 
-                required 
+              <Form.Check
+                type="checkbox"
+                label="I confirm that my personal data can be processed"
+                name="consent"
+                checked={formData.consent}
+                onChange={handleChange}
+                required
               />
             </Form.Group>
             <Button variant="primary" type="submit">
