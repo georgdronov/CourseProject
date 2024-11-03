@@ -6,6 +6,7 @@ import questionRouter from "./routes/questions.js";
 import answerRouter from "./routes/answers.js";
 import authRouter from "./routes/auth.js";
 import userRouter from "./routes/users.js";
+import salesForceRouter from "./routes/salesForceRouter.js";
 
 import db from "./db.js";
 
@@ -40,6 +41,7 @@ app.use("/questions", questionRouter);
 app.use("/answers", answerRouter);
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
+app.use("/salesforce", salesForceRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello from server.js");
@@ -53,4 +55,3 @@ db.pool.on("error", (err) => {
 app.listen(port, () => {
   console.log(`Listening at Port: ${port}`);
 });
-

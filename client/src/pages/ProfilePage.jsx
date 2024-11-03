@@ -34,7 +34,7 @@ export const ProfilePage = () => {
   }, []);
 
   const handleDeleteForm = async (id) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this form?");
+    const confirmDelete = window.confirm("Вы уверены, что хотите удалить эту форму?");
     if (confirmDelete) {
       try {
         await fetch(`${process.env.REACT_APP_SERVER_URL}/forms/${id}`, {
@@ -58,10 +58,37 @@ export const ProfilePage = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form data submitted:", formData);
-    handleModalClose(); 
+
+    try {
+      const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/salesforce/createAccount`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        alert("Информация успешно отправлена в Salesforce!");
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          consent: false,
+        });
+      } else {
+        const errorData = await response.json();
+        console.error("Ошибка при отправке в Salesforce:", errorData);
+        alert("Не удалось отправить информацию в Salesforce.");
+      }
+    } catch (error) {
+      console.error("Ошибка при отправке данных:", error);
+      alert("Произошла ошибка при отправке данных.");
+    }
+
+    handleModalClose();
   };
 
   return (
