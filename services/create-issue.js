@@ -14,7 +14,7 @@ const auth = {
 
 export async function createIssue(projectKey, issueType, summary, description) {
   try {
-    const baseUrl = "https://" + domain + ".atlassian.net";
+    const baseUrl = `https://${domain}.atlassian.net`;
 
     const data = {
       fields: {
@@ -33,9 +33,9 @@ export async function createIssue(projectKey, issueType, summary, description) {
       data,
       config
     );
-    return response.data.key;
+    return response.data.key; 
   } catch (error) {
-    console.log("error: ");
-    console.log(error.response.data.errors);
+    console.error("Error in createIssue:", error.response?.data?.errors || error.message);
+    return null;
   }
 }
