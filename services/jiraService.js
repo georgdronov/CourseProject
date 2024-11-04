@@ -30,14 +30,17 @@ export const jiraService = {
       },
     };
 
+    console.log("Sending request to Jira:", { url, data, auth });
+
     try {
       const response = await axios.post(url, data, {
         auth: auth,
         headers: { "Content-Type": "application/json" },
       });
+      console.log("Response from Jira:", response.data);
       return response.data;
     } catch (error) {
-      console.log("Error with creation ticket in Jira", error);
+      console.log("Error with creation ticket in Jira", error.response ? error.response.data : error);
       throw error;
     }
   },
