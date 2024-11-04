@@ -21,7 +21,7 @@ export const CreateTicket = () => {
         summary: summary,
         description: description,
         issuetype: {
-          name: "Task",
+          name: "Bug",
         },
       },
     };

@@ -13,7 +13,7 @@ export async function createJiraTicket(issueData) {
     );
 
     if (!response.ok) {
-      throw new Error(`Ошибка создания тикета: ${response.statusText}`);
+      throw new Error(`Error create Ticket: ${response.statusText}`);
     }
 
     const data = await response.json();
