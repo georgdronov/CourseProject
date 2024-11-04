@@ -13,20 +13,7 @@ export const CreateTicket = () => {
     setError(null);
     setSuccess(null);
 
-    const issueData = {
-      fields: {
-        project: { key: "SCRUM" },
-        summary: "TEST",
-        description: {
-          type: "doc",
-          version: 1,
-          content: [
-            { type: "paragraph", content: [{ type: "text", text: "TEST" }] },
-          ],
-        },
-        issuetype: { name: "Bug" },
-      },
-    };
+    const issueData = {"fields":{"project":{"key":"SCRUM"},"summary":"TEST2","description":{"type":"doc","version":1,"content":[{"type":"paragraph","content":[{"type":"text","text":"TEST2"}]}]},"issuetype":{"name":"Bug"}}};
 
     try {
       const data = await createJiraTicket(issueData);
