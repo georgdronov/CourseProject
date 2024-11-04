@@ -3,12 +3,17 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+const atlassianName = process.env.ATLASSIAN_USERNAME;
+const password = process.env.ATLASSIAN_API_KEY;
+const domain = process.env.DOMAIN;
+
+
 export const jiraService = {
   async createTicket(summary, priority, link, username) {
-    const url = `${process.env.JIRA_BASE_URL}/rest/api/2/issue`;
+    const url = `https://${domain}.atlassian.net/rest/api/2/issue`;
     const auth = {
-      username: process.env.JIRA_EMAIL,
-      password: process.env.JIRA_API_TOKEN,
+      username: atlassianName,
+      password: password,
     };
 
     const data = {
@@ -36,7 +41,7 @@ export const jiraService = {
       const response = await axios.post(url, data, {
         headers: { "Content-Type": "application/json" },
         Authorization: `Basic ${Buffer.from(
-          `${process.env.JIRA_EMAIL}:${process.env.JIRA_API_TOKEN}`
+          `${atlassianName}:${password}`
         ).toString("base64")}`,
       });
       console.log("Response from Jira:", response.data);
