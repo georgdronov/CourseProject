@@ -4,7 +4,7 @@ const encodedToken = "ZHJvbm92Z2Vvcmc3MkBnbWFpbC5jb206QVRBVFQzeEZmR0YwU2Fpekg2aj
 
   try {
     const response = await fetch(
-      `${process.env.REACT_APP_SERVER_URL}/api/jira/create-ticket`,
+      "https://courseproject-5nrc.onrender.com/api/jira/create-ticket",
       {
         method: "POST",
         headers: {

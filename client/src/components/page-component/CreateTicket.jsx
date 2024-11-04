@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { createJiraTicket } from "../../api/jiraApi";
 
 export const CreateTicket = () => {
-  const [summary, setSummary] = useState("");
-  const [description, setDescription] = useState("");
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
