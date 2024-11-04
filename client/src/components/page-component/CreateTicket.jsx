@@ -28,17 +28,6 @@ export const CreateTicket = () => {
   return (
     <div>
       <h2>Create a Jira Ticket</h2>
-      <input
-        type="text"
-        placeholder="Title"
-        value={summary}
-        onChange={(e) => setSummary(e.target.value)}
-      />
-      <textarea
-        placeholder="Description"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-      />
       <button onClick={handleCreateTicket} disabled={loading}>
         {loading ? "Creating..." : "Create Ticket"}
       </button>
