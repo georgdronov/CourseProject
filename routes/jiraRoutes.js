@@ -13,7 +13,7 @@ router.post("/create-ticket", async (req, res) => {
       method: "POST",
       headers: {
         "Authorization" : `Basic ${encodedToken}`,
-        Accept: "application/json",
+        "Accept": "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify(req.body),

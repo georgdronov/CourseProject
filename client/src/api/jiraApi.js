@@ -9,7 +9,7 @@ const encodedToken = "ZHJvbm92Z2Vvcmc3MkBnbWFpbC5jb206QVRBVFQzeEZmR0YwU2Fpekg2aj
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Accept: "application/json",
+          "Accept": "application/json",
           "Authorization" : `Basic ${encodedToken}`,
         },
         body: JSON.stringify(issueData),
