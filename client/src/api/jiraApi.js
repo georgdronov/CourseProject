@@ -12,8 +12,8 @@ export async function createJiraTicket(issueData) {
       {
         method: "POST",
         headers: {
+            "Content-Type": "application/json",
           Accept: "application/json",
-          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(issueData),
