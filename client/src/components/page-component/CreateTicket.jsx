@@ -15,14 +15,16 @@ export const CreateTicket = () => {
 
     const issueData = {
       fields: {
-        "parent": {
-          "key": "SCRUM",
+        project: { key: "SCRUM" },
+        summary: "TEST",
+        description: {
+          type: "doc",
+          version: 1,
+          content: [
+            { type: "paragraph", content: [{ type: "text", text: "TEST" }] },
+          ],
         },
-        "summary": summary,
-        "description": description,
-        "issuetype": {
-          "name": "Bug",
-        },
+        issuetype: { name: "Bug" },
       },
     };
 
