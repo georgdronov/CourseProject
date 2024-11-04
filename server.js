@@ -20,6 +20,7 @@ const allowedOrigins = [
   "http://localhost:3000",
   "https://course-project-rust-seven.vercel.app",
   "https://course-project-rust-seven.atlassian.net/rest/api/3/issue",
+  "https://courseproject-5nrc.onrender.com/api/jira/create-ticket",
 ];
 
 app.use(
