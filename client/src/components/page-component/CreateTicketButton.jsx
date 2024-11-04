@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Button } from "react-bootstrap";
 
 export const CreateTicketButton = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -31,9 +32,9 @@ export const CreateTicketButton = () => {
 
   return (
     <div>
-      <button onClick={handleCreateTicket} disabled={isLoading}>
+      <Button onClick={handleCreateTicket} disabled={isLoading}>
         {isLoading ? "Creating ticket..." : "Create ticket in Jira"}
-      </button>
+      </Button>
       {message && <p>{message}</p>}
     </div>
   );

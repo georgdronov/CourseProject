@@ -5,6 +5,7 @@ const router = express.Router();
 
 router.post("/create-ticket", async (req, res) => {
   const { summary, priority, link, username } = req.body;
+  console.log("Received data:", req.body);
   try {
     const result = await jiraService.createTicket(
       summary,
