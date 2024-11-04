@@ -6,7 +6,12 @@ const router = express.Router();
 router.post("/create-ticket", async (req, res) => {
   const { summary, priority, link, username } = req.body;
   try {
-    const result = await jiraService.createTicket(summary, priority, link, username);
+    const result = await jiraService.createTicket(
+      summary,
+      priority,
+      link,
+      username
+    );
     res.status(200).json({
       message: "Ticket created successfully",
       ticket: result,
