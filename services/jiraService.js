@@ -34,13 +34,18 @@ export const jiraService = {
 
     try {
       const response = await axios.post(url, data, {
-        auth: auth,
         headers: { "Content-Type": "application/json" },
+        Authorization: `Basic ${Buffer.from(
+          `${process.env.JIRA_EMAIL}:${process.env.JIRA_API_TOKEN}`
+        ).toString("base64")}`,
       });
       console.log("Response from Jira:", response.data);
       return response.data;
     } catch (error) {
-      console.log("Error with creation ticket in Jira", error.response ? error.response.data : error);
+      console.log(
+        "Error with creation ticket in Jira",
+        error.response ? error.response.data : error
+      );
       throw error;
     }
   },
