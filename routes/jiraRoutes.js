@@ -4,9 +4,9 @@ import fetch from "node-fetch";
 const router = express.Router();
 
 router.post("/create-ticket", async (req, res) => {
-
+ 
+  const jiraUrl ="https://course-project-rust-seven.atlassian.net/rest/api/3/issue";
   const encodedToken = "ZHJvbm92Z2Vvcmc3MkBnbWFpbC5jb206QVRBVFQzeEZmR0YwU2Fpekg2ajdaTzNFbGp4Q2laYi05R3NTVERaTUt5NkhvQlAyeWR3dlBqTGw3S290dzhTOTJpenlidlZRaUhsVFZQY3pncHc4S0RzdmVXUG5ReWpZMXBvbnduN2NDRXRFTHpneHE5V0xuT05tUXY5QnNQWFFnb0hvWVZEcTBZRzQ3RnpFM0U0Sm5ydjJFTDVmWG5JbWoyRGR2aEc1NUl0WmxGNml3c0FocF84PUNBNjYyNkNE"
-
 
   try {
     const response = await fetch(jiraUrl, {
