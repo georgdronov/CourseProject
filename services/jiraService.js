@@ -8,7 +8,7 @@ export const jiraService = {
     const url = `${process.env.JIRA_BASE_URL}/rest/api/3/issue`;
     const auth = {
       username: process.env.JIRA_EMAIL,
-      password: process.env.JIRA_API_TOKEN,
+      password: "ATATT3xFfGF0B-JSBu7SSMkTG5bQ7aKb_0GSmM_6V3r73S16DR7WWOx_0vwWU86jcNTFWo8moiRp6lhVeM1FeGSYDIcZsy51tcI0gJa5D9kYoBExymT0Jg9tjj2XYDHJkoEzEgEw93j8VjXeQ1TbYNuMu6xCm_ahcvFvJ5ZCvB3SC9oUC9dbQQc=E47ED5D0",
     };
 
     const username = localStorage.getItem("username");
