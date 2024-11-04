@@ -17,7 +17,7 @@ export async function createJiraTicket(issueData) {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(issueData),
-        mode: 'no-cors'
+        // mode: 'no-cors'
       }
     );
 
