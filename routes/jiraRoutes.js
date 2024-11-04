@@ -1,37 +1,34 @@
-import express from "express";
-import { createIssue } from "../services/create-issue.js";
+import express from 'express';
+import fetch from 'node-fetch';
 
 const router = express.Router();
 
-router.post("/create-ticket", async (req, res) => {
-  const { projectKey, issueType, summary, description } = req.body;
-  console.log("Received data:", req.body);
+router.post('/create-ticket', async (req, res) => {
+    const jiraUrl = 'https://course-project-rust-seven.atlassian.net/rest/api/3/issue';
+    const jiraToken = process.env.ATLASSIAN_API_KEY;
 
-  if (!projectKey || !issueType || !summary || !description) {
-    return res.status(400).json({ message: "Missing required fields" });
-  }
+    try {
+        const response = await fetch(jiraUrl, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${jiraToken}`,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(req.body)
+        });
 
-  try {
-    const ticketKey = await createIssue(
-      projectKey,
-      issueType,
-      summary,
-      description
-    );
+        if (!response.ok) {
+            throw new Error(`Error creating ticket: ${response.statusText}`);
+        }
 
-    res.status(200).json({
-      message: "Ticket created successfully",
-      ticket: ticketKey,
-    });
-  } catch (error) {
-    console.error("Error with creating ticket:", error.message);
-    res
-      .status(500)
-      .json({
-        message: "Error with creating ticket in Jira",
-        error: error.message,
-      });
-  }
+        const data = await response.json();
+        res.status(200).json(data);
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ message: 'Server error fith creating ticket' });
+
+    }
 });
 
 export default router;
