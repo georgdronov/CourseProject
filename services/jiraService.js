@@ -5,7 +5,7 @@ dotenv.config();
 
 export const jiraService = {
   async createTicket(summary, priority, link, username) {
-    const url = `${process.env.JIRA_BASE_URL}/rest/api/3/issue`;
+    const url = `${process.env.JIRA_BASE_URL}/rest/api/2/issue`;
     const auth = {
       username: process.env.JIRA_EMAIL,
       password: process.env.JIRA_API_TOKEN,
