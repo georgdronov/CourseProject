@@ -8,7 +8,7 @@ router.post("/create-ticket", async (req, res) => {
     "https://course-project-rust-seven.atlassian.net/rest/api/3/issue";
 
   const encodedToken =
-    "QVRBVFRMM3hGZkdGMFNhSGl6SDZqN1pPM0VsA3hDaU1iLTlHc1NEWk1LeGo2SG9CUDJ5eHZwUGpMbDdLb3R3OHM5Mnp6eWJ2VFFpSGxUVnBjWnRycDgwS0RzdmVXRHBYM0x1Y3l5LVRQZnVRR3BTTzhCZ0RlNHRwRUR4Y3Q0NjYyNkNENQ==";
+    "QVRBVFQzeEZmR0YwU2Fpekg2ajdaTzNFbGp4Q2laYi05R3NTVERaTUt5NkhvQlAyeWR3dlBqTGw3S290dzhTOTJpenlidlZRaUhsVFZQY3pncHc4S0RzdmVXUG5ReWpZMXBvbnduN2NDRXRFTHpneHE5V0xuT05tUXY5QnNQWFFnb0hvWVZEcTBZRzQ3RnpFM0U0Sm5ydjJFTDVmWG5JbWoyRGR2aEc1NUl0WmxGNml3c0FocF84PUNBNjYyNkNE";
   const decodeToken = (encoded) => {
     return atob(encoded);
   };
