@@ -15,13 +15,13 @@ export const CreateTicket = () => {
 
     const issueData = {
       fields: {
-        project: {
-          key: "SCRUM",
+        "project": {
+          "key": "SCRUM",
         },
-        summary: summary,
-        description: description,
-        issuetype: {
-          name: "Bug",
+        "summary": summary,
+        "description": description,
+        "issuetype": {
+          "name": "Bug",
         },
       },
     };
