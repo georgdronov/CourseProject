@@ -4,7 +4,14 @@ export async function createJiraTicket(issueData) {
   const decodeToken = (encoded) => {
     return atob(encoded);
   };
-  const token = decodeToken(encodedToken);
+  const password = decodeToken(encodedToken);
+
+  const username = process.env.ATLASSIAN_USERNAME;
+
+  const auth = {
+    username: username,
+    password: password,
+  };
 
   try {
     const response = await fetch(
@@ -14,7 +21,7 @@ export async function createJiraTicket(issueData) {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
-          Authorization: `Bearer ${token}`,
+          auth: auth,
         },
         body: JSON.stringify(issueData),
         mode: "no-cors",

@@ -12,15 +12,20 @@ router.post("/create-ticket", async (req, res) => {
   const decodeToken = (encoded) => {
     return atob(encoded);
   };
-  const token = decodeToken(encodedToken);
+  const password = decodeToken(encodedToken);
 
-  const jiraToken = token;
+  const username = process.env.ATLASSIAN_USERNAME;
+
+  const auth = {
+    username: username,
+    password: password,
+  };
 
   try {
     const response = await fetch(jiraUrl, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${jiraToken}`,
+        auth: auth,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
