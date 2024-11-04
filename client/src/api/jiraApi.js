@@ -7,7 +7,7 @@ export async function createJiraTicket(issueData) {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${process.env.ATLASSIAN_API_KEY}`,
+          "Authorization": `Bearer ${process.env.REACT_APP_JIRA_TOKEN}`,
         },
         body: JSON.stringify(issueData),
       }
