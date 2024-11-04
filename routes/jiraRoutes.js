@@ -1,23 +1,19 @@
 import express from "express";
-import { jiraService } from "../services/jiraService.js";
+import { createIssue } from "../services/create-issue.js";
 
 const router = express.Router();
 
 router.post("/create-ticket", async (req, res) => {
-  const { summary, priority, link, username } = req.body;
+  const { projectKey, issueType, summary, description } = req.body; 
   console.log("Received data:", req.body);
   
-  if (!summary || !priority || !link || !username) {
+  if (!projectKey || !issueType || !summary || !description) {
     return res.status(400).json({ message: "Missing required fields" });
   }
 
   try {
-    const result = await jiraService.createTicket(
-      summary,
-      priority,
-      link,
-      username
-    );
+    const result = await createIssue(projectKey, issueType, summary, description);
+    
     res.status(200).json({
       message: "Ticket created successfully",
       ticket: result,
@@ -27,6 +23,5 @@ router.post("/create-ticket", async (req, res) => {
     res.status(500).json({ message: "Error with creating ticket in Jira", error: error.message });
   }
 });
-
 
 export default router;

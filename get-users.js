@@ -4,10 +4,10 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const username = process.env.ATLASSIAN_USERNAME;
-const password = process.env.ATLASSIAN_API_KEY;
+const password = process.env.ATLASSIAN_API_KEY || "";
 const domain = process.env.DOMAIN;
 
-console.log(username, password, domain); // Проверяем переменные окружения
+console.log(username, password, domain); 
 
 const auth = {
   username: username,
@@ -25,7 +25,7 @@ export async function getUsers() {
       auth: auth,
     };
     const response = await axios.request(config);
-    console.log("Response data:", response.data); // Логируем данные ответа
+    console.log("Response data:", response.data); 
     return response.data;
   } catch (error) {
     console.log("Error occurred:");
@@ -39,7 +39,6 @@ export async function getUsers() {
   }
 }
 
-// Вызов функции
 (async () => {
   await getUsers();
 })();

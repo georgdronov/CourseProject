@@ -10,18 +10,25 @@ export const CreateTicketButton = () => {
     setIsLoading(true);
     setMessage("");
 
+    const projectKey = "SCRUM"; 
+    const issueType = "Task"; 
+    const summary = "Test Summary"; 
+    const description = "Detailed description of the ticket.";
+
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_SERVER_URL}/api/jira/create-ticket`,
         {
-          summary: "Test Summary",
-          priority: "High",
-          link: window.location.href,
+          projectKey,  
+          issueType,    
+          summary,     
+          description,  
+          link: window.location.href,  
           username: localStorage.getItem("username"),
         }
       );
 
-      setMessage(`Ticket create success: ${response.data.ticket.key}`);
+      setMessage(`Ticket created successfully: ${response.data.ticket}`);
     } catch (error) {
       setMessage("Error with creating ticket");
       console.error("Error with creating ticket:", error);
