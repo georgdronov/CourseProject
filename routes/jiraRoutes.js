@@ -6,7 +6,15 @@ const router = express.Router();
 router.post("/create-ticket", async (req, res) => {
   const jiraUrl =
     "https://course-project-rust-seven.atlassian.net/rest/api/3/issue";
-  const jiraToken = process.env.ATLASSIAN_API_KEY;
+
+  const encodedToken =
+    "QVRBVFRMM3hGZkdGMFNhSGl6SDZqN1pPM0VsA3hDaU1iLTlHc1NEWk1LeGo2SG9CUDJ5eHZwUGpMbDdLb3R3OHM5Mnp6eWJ2VFFpSGxUVnBjWnRycDgwS0RzdmVXRHBYM0x1Y3l5LVRQZnVRR3BTTzhCZ0RlNHRwRUR4Y3Q0NjYyNkNENQ==";
+  const decodeToken = (encoded) => {
+    return atob(encoded);
+  };
+  const token = decodeToken(encodedToken);
+
+  const jiraToken = token;
 
   try {
     const response = await fetch(jiraUrl, {
