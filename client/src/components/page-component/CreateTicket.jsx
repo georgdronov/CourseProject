@@ -15,7 +15,7 @@ export const CreateTicket = () => {
 
     const issueData = {
       fields: {
-        "project": {
+        "parent": {
           "key": "SCRUM",
         },
         "summary": summary,
