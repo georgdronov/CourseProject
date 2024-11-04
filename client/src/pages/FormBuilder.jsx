@@ -15,7 +15,6 @@ import { MakeSingleLineQuestion } from "../components/make-question/MakeSingleLi
 import { MakeMultiLineQuestion } from "../components/make-question/MakeMultiLineQuestion";
 import { MakeNumberQuestion } from "../components/make-question/MakeNumberQuestion";
 import { MakeCheckboxQuestion } from "../components/make-question/MakeCheckboxQuestion";
-import { Header } from "../components/page-component/Header";
 
 export const FormBuilder = () => {
   const { id } = useParams();
@@ -153,7 +152,6 @@ export const FormBuilder = () => {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <Header/>
       <Container className="d-flex justify-content-center align-items-center min-vh-100 mt-5">
         <Row className="w-100">
           <Col className="col-12 col-md-6">

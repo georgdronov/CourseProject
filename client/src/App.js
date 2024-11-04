@@ -7,11 +7,14 @@ import { NotFound } from "./pages/NotFound";
 import {LoginPage} from "./pages/LoginPage"
 import { RegisterPage } from "./pages/RegisterPage";
 import { ProfilePage } from "./pages/ProfilePage";
+import { Header } from "./components/page-component/Header";
+import { Footer } from "./components/page-component/Footer";
 
 
 function App() {
   return (
     <Router>
+      <Header/>
       <div className="App">
         <Routes>
           <Route path="/" element={<MainPage />} />
@@ -23,6 +26,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
+      <Footer/>
     </Router>
   );
 }

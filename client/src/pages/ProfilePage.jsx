@@ -8,7 +8,6 @@ import {
   Modal,
   Form,
 } from "react-bootstrap";
-import { Header } from "../components/page-component/Header";
 import { Link } from "react-router-dom";
 
 export const ProfilePage = () => {
@@ -112,7 +111,6 @@ export const ProfilePage = () => {
 
   return (
     <Container className="d-flex flex-column justify-content-center align-items-center min-vh-100 shadow bg-light p-5 rounded mt-5">
-      <Header />
       <h1 className="text-center mb-5">Hello, {username}!</h1>
       <h2 className="text-center mb-4">Your Forms</h2>
 

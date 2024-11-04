@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button, Card, Pagination } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { Header } from "../components/page-component/Header";
 
 export const MainPage = () => {
   const itemsPerPage = 6;
@@ -102,7 +101,6 @@ export const MainPage = () => {
 
   return (
     <Container className="d-flex flex-column justify-content-center align-items-center min-vh-100 shadow bg-light p-5 rounded mt-5">
-      <Header />
       <h1 className="text-center mb-5">Welcome to the Form Builder!</h1>
 
       {isLoggedIn ? (
