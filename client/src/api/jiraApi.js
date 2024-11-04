@@ -14,7 +14,6 @@ export async function createJiraTicket(issueData) {
         
       }
     );
-    console.log(issueData)
 
     if (!response.ok) {
       throw new Error(`Error create Ticket: ${response.statusText}`);
