@@ -7,6 +7,8 @@ import answerRouter from "./routes/answers.js";
 import authRouter from "./routes/auth.js";
 import userRouter from "./routes/users.js";
 import salesForceRouter from "./routes/salesForceRouter.js";
+import jiraRoutes from  "./routes/jiraRoutes.js";
+
 
 import db from "./db.js";
 
@@ -42,6 +44,7 @@ app.use("/answers", answerRouter);
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
 app.use("/salesforce", salesForceRouter);
+app.use("/api/jira", jiraRoutes)
 
 app.get("/", (req, res) => {
   res.send("Hello from server.js");

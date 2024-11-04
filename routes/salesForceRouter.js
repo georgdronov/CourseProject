@@ -9,7 +9,7 @@ const SALESFORCE_INSTANCE_URL = "https://cweb2-dev-ed.develop.my.salesforce.com"
 const API_VERSION = "v62.0"; 
 
 router.post("/createAccount", async (req, res) => {
-  const { firstName, lastName, email, phone } = req.body; // Добавлено поле телефона
+  const { firstName, lastName, email, phone } = req.body;
 
   try {
     const accountResponse = await axios.post(

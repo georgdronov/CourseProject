@@ -10,6 +10,9 @@ Quizzes, tests, questionnaires, polls, etc.
 - **Vercel for React**
 [https://course-project-rust-seven.vercel.app/](https://course-project-rust-seven.vercel.app/)
 
+- **JIRA**
+[https://course-project-rust-seven.atlassian.net/](https://course-project-rust-seven.atlassian.net/)
+
 ### Backend
 The backend is built using **Node.js** and leverages the following libraries:
 - **Express**: A fast, minimalist web framework for Node.js.
