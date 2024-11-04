@@ -28,14 +28,17 @@ export const CreateTicketButton = () => {
         }
       );
 
-      if (response.data.ticket) {
+      if (response.data && response.data.ticket) {
         setMessage(`Ticket created successfully: ${response.data.ticket}`);
       } else {
-        setMessage("Error with creating ticket: ticket data is undefined.");
+        setMessage("Error: Ticket creation returned no ticket key.");
       }
     } catch (error) {
       setMessage("Error with creating ticket");
-      console.error("Error with creating ticket:", error);
+      console.error(
+        "Error with creating ticket:",
+        error.response?.data || error.message
+      );
     } finally {
       setIsLoading(false);
     }

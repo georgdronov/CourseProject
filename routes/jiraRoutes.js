@@ -12,19 +12,25 @@ router.post("/create-ticket", async (req, res) => {
   }
 
   try {
-    const result = await createIssue(projectKey, issueType, summary, description);
-    
-    if (!result) {
-      return res.status(500).json({ message: "Failed to create ticket in Jira" });
-    }
+    const ticketKey = await createIssue(
+      projectKey,
+      issueType,
+      summary,
+      description
+    );
 
     res.status(200).json({
       message: "Ticket created successfully",
-      ticket: result,
+      ticket: ticketKey,
     });
   } catch (error) {
-    console.error("Error with creating ticket:", error);
-    res.status(500).json({ message: "Error with creating ticket in Jira", error: error.message });
+    console.error("Error with creating ticket:", error.message);
+    res
+      .status(500)
+      .json({
+        message: "Error with creating ticket in Jira",
+        error: error.message,
+      });
   }
 });
 

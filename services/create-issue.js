@@ -15,7 +15,6 @@ const auth = {
 export async function createIssue(projectKey, issueType, summary, description) {
   try {
     const baseUrl = `https://${domain}.atlassian.net`;
-
     const data = {
       fields: {
         project: { key: projectKey },
@@ -24,18 +23,21 @@ export async function createIssue(projectKey, issueType, summary, description) {
         issuetype: { name: issueType },
       },
     };
+
     const config = {
       headers: { "Content-Type": "application/json" },
       auth: auth,
     };
-    const response = await axios.post(
-      `${baseUrl}/rest/api/2/issue`,
-      data,
-      config
-    );
-    return response.data.key; 
+
+    const response = await axios.post(`${baseUrl}/rest/api/2/issue`, data, config);
+
+    if (response.data && response.data.key) {
+      return response.data.key;
+    } else {
+      throw new Error("Ticket creation response missing key property.");
+    }
   } catch (error) {
-    console.error("Error in createIssue:", error.response?.data?.errors || error.message);
-    return null;
+    console.error("Error in createIssue:", error.response?.data || error.message);
+    throw new Error("Failed to create ticket in Jira");
   }
 }
