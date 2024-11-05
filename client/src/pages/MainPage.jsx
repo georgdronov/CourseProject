@@ -126,9 +126,10 @@ export const MainPage = () => {
             {currentEditForms.map((form) => (
               <Col md={6} lg={4} className="mb-4" key={form.id}>
                 <Card className="hover-shadow-lg">
-                  <Card.Header>Author: {form.username}</Card.Header>
+                  <Card.Header>
+                    <strong>{form.title}</strong>
+                  </Card.Header>
                   <Card.Body>
-                    <Card.Title>{form.title}</Card.Title>
                     <Card.Text>
                       {form.description || "No description available"}
                     </Card.Text>
@@ -173,9 +174,10 @@ export const MainPage = () => {
         {currentFillForms.map((form) => (
           <Col md={6} lg={4} className="mb-4" key={form.id}>
             <Card className="hover-shadow-lg">
-              <Card.Header>Author: {form.username}</Card.Header>
+              <Card.Header>
+                <strong>{form.title}</strong>
+              </Card.Header>
               <Card.Body>
-                <Card.Title>{form.title}</Card.Title>
                 <Card.Text>
                   {form.description || "No description available"}
                 </Card.Text>
