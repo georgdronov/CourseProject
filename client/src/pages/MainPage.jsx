@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button, Card, Pagination } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { CreateTicket } from "../components/page-component/CreateTicket";
 
 export const MainPage = () => {
   const itemsPerPage = 6;
@@ -119,8 +118,6 @@ export const MainPage = () => {
           To create a form, you must be logged in.
         </p>
       )}
-
-      <CreateTicket/>
 
       {isLoggedIn && (
         <>
