@@ -11,38 +11,51 @@ const CreateJiraTicket = () => {
   const [issueType, setIssueType] = useState("Bug");
   const [reportedBy, setReportedBy] = useState("");
   const [link, setLink] = useState("");
+  const [status, setStatus] = useState("Opened");
 
   const priorityMapping = {
     Highest: {
       id: "1",
       name: "Highest",
       self: "https://course-project-rust-seven.atlassian.net/rest/api/3/priority/1",
-      iconUrl: "https://course-project-rust-seven.atlassian.net/images/icons/priorities/highest.svg",
+      iconUrl:
+        "https://course-project-rust-seven.atlassian.net/images/icons/priorities/highest.svg",
     },
     High: {
       id: "2",
       name: "High",
       self: "https://course-project-rust-seven.atlassian.net/rest/api/3/priority/2",
-      iconUrl: "https://course-project-rust-seven.atlassian.net/images/icons/priorities/high.svg",
+      iconUrl:
+        "https://course-project-rust-seven.atlassian.net/images/icons/priorities/high.svg",
     },
     Medium: {
       id: "3",
       name: "Medium",
       self: "https://course-project-rust-seven.atlassian.net/rest/api/3/priority/3",
-      iconUrl: "https://course-project-rust-seven.atlassian.net/images/icons/priorities/medium.svg",
+      iconUrl:
+        "https://course-project-rust-seven.atlassian.net/images/icons/priorities/medium.svg",
     },
     Low: {
       id: "4",
       name: "Low",
       self: "https://course-project-rust-seven.atlassian.net/rest/api/3/priority/4",
-      iconUrl: "https://course-project-rust-seven.atlassian.net/images/icons/priorities/low.svg",
+      iconUrl:
+        "https://course-project-rust-seven.atlassian.net/images/icons/priorities/low.svg",
     },
     Lowest: {
       id: "5",
       name: "Lowest",
       self: "https://course-project-rust-seven.atlassian.net/rest/api/3/priority/5",
-      iconUrl: "https://course-project-rust-seven.atlassian.net/images/icons/priorities/lowest.svg",
+      iconUrl:
+        "https://course-project-rust-seven.atlassian.net/images/icons/priorities/lowest.svg",
     },
+  };
+
+  const statusMapping = {
+    Opened: { id: "10027", value: "Opened" },
+    InProgress: { id: "10028", value: "In progress" },
+    Fixed: { id: "10030", value: "Fixed" },
+    Rejected: { id: "10029", value: "Rejected" },
   };
 
   useEffect(() => {
@@ -58,6 +71,7 @@ const CreateJiraTicket = () => {
     setSummary("");
     setPriority("Medium");
     setIssueType("Bug");
+    setStatus("Opened");
   };
 
   const handleModalShow = () => {
@@ -90,6 +104,7 @@ const CreateJiraTicket = () => {
           ],
         },
         issuetype: { name: issueType },
+        customfield_10049: statusMapping[status], 
       },
     };
 
@@ -167,6 +182,20 @@ const CreateJiraTicket = () => {
                 <option value="Bug">Bug</option>
                 <option value="Story">Story</option>
                 <option value="Task">Task</option>
+              </Form.Control>
+            </Form.Group>
+
+            <Form.Group controlId="status" className="mt-3">
+              <Form.Label>Status</Form.Label>
+              <Form.Control
+                as="select"
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+              >
+                <option value="Opened">Opened</option>
+                <option value="InProgress">In progress</option>
+                <option value="Fixed">Fixed</option>
+                <option value="Rejected">Rejected</option>
               </Form.Control>
             </Form.Group>
 
