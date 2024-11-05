@@ -7,11 +7,43 @@ const CreateJiraTicket = () => {
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
   const [summary, setSummary] = useState("");
-  const [priority, setPriority] = useState("Average");
+  const [priority, setPriority] = useState("Medium");
   const [issueType, setIssueType] = useState("Bug");
-  const [status, setStatus] = useState("Opened"); // Новое состояние для статуса
   const [reportedBy, setReportedBy] = useState("");
   const [link, setLink] = useState("");
+
+  const priorityMapping = {
+    Highest: {
+      id: "1",
+      name: "Highest",
+      self: "https://course-project-rust-seven.atlassian.net/rest/api/3/priority/1",
+      iconUrl: "https://course-project-rust-seven.atlassian.net/images/icons/priorities/highest.svg",
+    },
+    High: {
+      id: "2",
+      name: "High",
+      self: "https://course-project-rust-seven.atlassian.net/rest/api/3/priority/2",
+      iconUrl: "https://course-project-rust-seven.atlassian.net/images/icons/priorities/high.svg",
+    },
+    Medium: {
+      id: "3",
+      name: "Medium",
+      self: "https://course-project-rust-seven.atlassian.net/rest/api/3/priority/3",
+      iconUrl: "https://course-project-rust-seven.atlassian.net/images/icons/priorities/medium.svg",
+    },
+    Low: {
+      id: "4",
+      name: "Low",
+      self: "https://course-project-rust-seven.atlassian.net/rest/api/3/priority/4",
+      iconUrl: "https://course-project-rust-seven.atlassian.net/images/icons/priorities/low.svg",
+    },
+    Lowest: {
+      id: "5",
+      name: "Lowest",
+      self: "https://course-project-rust-seven.atlassian.net/rest/api/3/priority/5",
+      iconUrl: "https://course-project-rust-seven.atlassian.net/images/icons/priorities/lowest.svg",
+    },
+  };
 
   useEffect(() => {
     const username = localStorage.getItem("username") || "Guest";
@@ -23,6 +55,9 @@ const CreateJiraTicket = () => {
     setShowModal(false);
     setError(null);
     setMessage(null);
+    setSummary("");
+    setPriority("Medium");
+    setIssueType("Bug");
   };
 
   const handleModalShow = () => {
@@ -38,7 +73,7 @@ const CreateJiraTicket = () => {
       fields: {
         project: { key: "SCRUM" },
         summary: summary,
-        priority: { name: priority },
+        priority: priorityMapping[priority],
         description: {
           type: "doc",
           version: 1,
@@ -55,7 +90,6 @@ const CreateJiraTicket = () => {
           ],
         },
         issuetype: { name: issueType },
-        status: { name: status }, 
       },
     };
 
@@ -80,7 +114,6 @@ const CreateJiraTicket = () => {
       setError("Failed to create ticket: " + err.message);
     } finally {
       setLoading(false);
-      setShowModal(false);
     }
   };
 
@@ -109,20 +142,22 @@ const CreateJiraTicket = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="priority" className="mt-3 ">
+            <Form.Group controlId="priority" className="mt-3">
               <Form.Label>Priority</Form.Label>
               <Form.Control
                 as="select"
                 value={priority}
                 onChange={(e) => setPriority(e.target.value)}
               >
+                <option value="Highest">Highest</option>
                 <option value="High">High</option>
-                <option value="Average">Average</option>
+                <option value="Medium">Medium</option>
                 <option value="Low">Low</option>
+                <option value="Lowest">Lowest</option>
               </Form.Control>
             </Form.Group>
 
-            <Form.Group controlId="issueType" className="mt-3 ">
+            <Form.Group controlId="issueType" className="mt-3">
               <Form.Label>Issue Type</Form.Label>
               <Form.Control
                 as="select"
@@ -132,20 +167,6 @@ const CreateJiraTicket = () => {
                 <option value="Bug">Bug</option>
                 <option value="Story">Story</option>
                 <option value="Task">Task</option>
-              </Form.Control>
-            </Form.Group>
-
-            <Form.Group controlId="status" className="mt-3 ">
-              <Form.Label>Status</Form.Label>
-              <Form.Control
-                as="select"
-                value={status}
-                onChange={(e) => setStatus(e.target.value)}
-              >
-                <option value="Opened">Opened</option>
-                <option value="In progress">In progress</option>
-                <option value="Rejected">Rejected</option>
-                <option value="Fixed">Fixed</option>
               </Form.Control>
             </Form.Group>
 
@@ -161,11 +182,7 @@ const CreateJiraTicket = () => {
           <Button variant="secondary" onClick={handleModalClose}>
             Cancel
           </Button>
-          <Button
-            variant="primary"
-            onClick={handleSubmit}
-            disabled={loading}
-          >
+          <Button variant="primary" onClick={handleSubmit} disabled={loading}>
             {loading ? "Creating..." : "Create Ticket"}
           </Button>
         </Modal.Footer>
