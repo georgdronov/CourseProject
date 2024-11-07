@@ -100,7 +100,7 @@ export const MainPage = () => {
   const handleFillPageChange = (pageNumber) => setCurrentPageFill(pageNumber);
 
   return (
-    <Container className="d-flex flex-column justify-content-center align-items-center min-vh-100 shadow bg-light p-5 rounded mt-5">
+    <Container className="d-flex flex-column justify-content-center align-items-center min-vh-100 shadow bg-light p-5 rounded mt-5 mb-5">
       <h1 className="text-center mb-5">Welcome to the Form Builder!</h1>
 
       {isLoggedIn ? (
