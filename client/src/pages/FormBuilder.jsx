@@ -152,7 +152,7 @@ export const FormBuilder = () => {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <Container className="d-flex justify-content-center align-items-center min-vh-100 mt-5">
+      <Container className="d-flex justify-content-center align-items-center min-vh-100 mt-5 mb-5">
         <Row className="w-100">
           <Col className="col-12 col-md-6">
             <div className="shadow bg-light p-5 rounded">
